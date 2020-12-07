@@ -2,7 +2,7 @@ import React from 'react'
 
 import '../styles/AllBooks.css'
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 class AllBooks extends React.Component {
 

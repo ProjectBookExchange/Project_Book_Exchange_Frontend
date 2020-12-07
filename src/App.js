@@ -3,7 +3,7 @@ import './App.css';
 
 import SignUp from './components/SignUp';
 import Home from './components/Home';
-import AllMangas from './components/AllBooks';
+// import AllBooks from './components/AllBooks';
 // import IndividualManga from './components/IndividualManga';
 import LogIn from './components/LogIn';
 import Profile from './components/Profile';
@@ -12,8 +12,8 @@ import { Link, Route, Redirect } from 'react-router-dom';
 import UserService from './services/UserService';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
+// import $ from 'jquery';
+// import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 class App extends React.Component {
@@ -86,17 +86,13 @@ class App extends React.Component {
 			<div className="App">
 
 				<nav class="navbar navbar-expand-lg navbar-light bg-light">
-					{/* <a class="navbar-brand" href="#">Navbar</a> */}
 					<Link class="navbar-brand" to="/">Home</Link>
-					{/* <p class="navbar-brand">Navbar</p> */}
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarNav">
 						<ul class="navbar-nav">
 							<li class="nav-item active">
-								{/* <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> */}
-
 							</li>
 							<li class="nav-item">
 							{!this.state.isLogged.username && <Link class="nav-link" to="/signup">Sign Up</Link>}
@@ -104,14 +100,18 @@ class App extends React.Component {
 							<li class="nav-item">
 							{!this.state.isLogged.username && <Link class="nav-link" to="/login">Log In</Link>}
 							</li>
+							<li class="nav-item">
+							{this.state.isLogged.username && <Link class="nav-link" to="/profile">Profile</Link>}
+							</li>
 						</ul>
 					</div>
 				</nav>
 
 				{/* <Link to="/all-mangas">All Mangas</Link> */}
+				{/* <Route exact path="/all-books" component={AllMangas} /> */}
 
 				<Route exact path="/" render={() => <Home logOut={this.logOut} isLogged={this.state.isLogged} />} />
-				{/* <Route exact path="/all-books" component={AllMangas} /> */}
+				
 
 
 				{/* <Route path='/all-mangas/:id' render={(props) => {
@@ -138,7 +138,18 @@ class App extends React.Component {
 						/>
 					)}
 				/>
-				{/* {this.state.isLogged._id && <Route path="/profile" render={()=><Profile isLogged={this.state.isLogged}/>}/>} */}
+				
+				<Route 
+					path="/profile" 
+					render={()=>(
+					<Profile 
+						isLogged={this.state.isLogged}
+						
+					/>
+					)}
+
+					/>
+
 
 			</div>
 		);

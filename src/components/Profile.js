@@ -1,117 +1,103 @@
-// import React from 'react'
-// import MangaService from '../services/MangaService'
+import React from 'react'
+import BookService from '../services/BookService'
 
-// class Profile extends React.Component{
+class Profile extends React.Component {
 
-//   state = {
-//     leidos: [],
-//     leidosFull: [],
-//     leyendo: [],
-//     leyendoFull: [],
-//     porLeer: [],
-//     porLeerFull: []
-//   }
+    state = {
+        books: [],
+        newBook: {
+            title: '',
+            image: '',
+            owner: this.props.isLogged._id
+        }
+    }
 
-//   service = new MangaService()
+    service = new BookService()
 
-//   componentDidMount(){
-//     this.service.getUser(this.props.isLogged._id)
-//     .then((response)=>{
-//       this.setState({leidos: [...response.leidos], leyendo: [...response.leyendo], porLeer: [...response.porLeer]})
-//       this.getFullLeidos()
-//       this.getFullLeyendo()
-//       this.getFullPorLeer()
-//     })
-//     .catch((err)=>{
-//       console.log(err)
-//     })
-//   }
+    userID = this.props.isLogged._id
 
-//   getFullLeidos = ()=>{
-//     const prueba = this.state.leidos.map((_id)=>{
+    addBook = (event) => {
+        event.preventDefault()
+        this.service.addToMyBooks(this.state.newBook.title, this.state.newBook.image, this.state.newBook.owner)
+            .then((result) => console.log(result))
+            .catch((err) => console.log(err))
+    }
 
-//       return fetch(`https://api.jikan.moe/v3/manga/${_id}`)
-//       .then((data)=>{
-//         return data.json()
-//       })
-//       .then((dataJSON)=>{
-//         return dataJSON
-//       })
-//     })
+    changeHandlerAddBook(_eventTarget) {
+        this.setState({ newBook: { ...this.state.newBook, [_eventTarget.name]: _eventTarget.value } })
 
-//     Promise.all(prueba)
-//     .then((result)=>{
-//       this.setState({leidosFull : result})
-//     })
-//   }
+        // const aNewBook = {...this.state.newBook}
+        // this.setState({books: {...this.state.books, aNewBook}})
+    }
 
-//   getFullLeyendo = ()=>{
-//     const prueba = this.state.leyendo.map((_id)=>{
+    componentDidMount() {
+        this.service.getMyBooks(this.props.isLogged._id)
+            .then((result) => {
+                return result.myBooks
+            })
+            .then((myBooks) => {
+                this.setState({ books: myBooks })
+            })
+            .catch((err) => console.log(err))
+    }
 
-//       return fetch(`https://api.jikan.moe/v3/manga/${_id}`)
-//       .then((data)=>{
-//         return data.json()
-//       })
-//       .then((dataJSON)=>{
-//         return dataJSON
-//       })
-//     })
+    renderMyBooks() {
+        return this.state.books.map((book, index) => {
+            return (
+                <div key={index}>
+                    <p>{book.title}</p>
+                </div>
+            )
+        })
+    }
 
-//     Promise.all(prueba)
-//     .then((result)=>{
-//       this.setState({leyendoFull : result})
-//     })
-//   }
+    renderSpinner = () => {
+        return (
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        )
+    }
 
-//   getFullPorLeer = ()=>{
-//     const prueba = this.state.porLeer.map((_id)=>{
+    render() {
+        return (
+            <div>
+                <h2>Welcome, {this.props.isLogged.username}, this is your profile page</h2>
 
-//       return fetch(`https://api.jikan.moe/v3/manga/${_id}`)
-//       .then((data)=>{
-//         return data.json()
-//       })
-//       .then((dataJSON)=>{
-//         return dataJSON
-//       })
-//     })
+                <h3>Add a Book</h3>
 
-//     Promise.all(prueba)
-//     .then((result)=>{
-//       this.setState({porLeerFull : result})
-//     })
-//   }
+                <form>
 
-//   renderLeidos = ()=>{
+                    <label htmlFor="title">Title: </label>
+                    <input
+                        type="text"
+                        name="title"
+                        onChange={(event) => this.changeHandlerAddBook(event.target)}
+                    />
 
-//     return this.state.leidosFull.map((manga)=>{
-//       return <h3>{manga.title_japanese}</h3>
-//     })
-//   }
+                    <label htmlFor="image">Image: </label>
+                    <input
+                        type="text"
+                        name="image"
+                        onChange={(event) => this.changeHandlerAddBook(event.target)}
+                    />
 
-//   renderLeyendo = ()=>{
+                    <button onClick={this.addBook} type="submit">Añadir libro</button>
 
-//     return this.state.leyendoFull.map((manga)=>{
-//       return <h3>{manga.title_japanese}</h3>
-//     })
-//   }
+                </form>
 
-//   renderPorLeer = ()=>{
+                <div>
+                    <h3>Mis libros</h3>
+                    {/* {this.renderMyBooks()} */}
+                    {/* {this.state.books.map((book)=>{
+                    return <p>{book.title}</p>
+                })} */}
+                    {this.state.books.length === 0 ? this.renderSpinner() : this.renderMyBooks()}
+                </div>
 
-//     return this.state.porLeerFull.map((manga)=>{
-//       return <h3>{manga.title_japanese}</h3>
-//     })
-//   }
+            </div>
+        )
+    }
+}
 
-//   render(){
-//     return(
-//       <div>
-//         <h2>Welcome, {this.props.isLogged.username}</h2>
-//         {this.state.leidosFull.length > 0 && this.renderLeidos()}
-//         {this.state.leyendoFull.length > 0 && this.renderLeyendo()}
-//         {this.state.porLeerFull.length > 0 && this.renderPorLeer()}
-//       </div>
-//     )    
-//   }
-// }
-
-// export default Profile
+export default Profile
