@@ -1,6 +1,10 @@
+
 .App {
   text-align: center;
-  margin-top: 80px
+  margin-top: 80px;
+  /* background-size: cover; */
+  /* background-color: coral; */ 
+  /* background-image: url('./images/backgroundImage.png')  */
 }
 
 .App-logo {
@@ -82,4 +86,8 @@
 
 .my-books-list img{
   width: 100px
+}
+
+.card-container{
+  margin-bottom: 20px
 }

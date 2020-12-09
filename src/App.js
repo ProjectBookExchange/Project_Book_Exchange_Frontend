@@ -1,4 +1,8 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// import $ from 'jquery';
+// import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './App.css';
 
 import SignUp from './components/SignUp';
@@ -11,10 +15,7 @@ import Profile from './components/Profile';
 import { Link, Route, Redirect } from 'react-router-dom';
 import UserService from './services/UserService';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 class App extends React.Component {
 
@@ -84,7 +85,6 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-
 				<nav class="navbar navbar-expand-sm navbar-dark fixed-top nav-bar-styles">
 
 					<Link class="navbar-brand" to="/">
@@ -109,6 +109,9 @@ class App extends React.Component {
 
 
 							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/login">Log In</Link>}
+
+							{this.state.isLogged.username && <Link class="nav-item nav-link" onClick={() => this.logOut()}>Log Out</Link>}
+
 						</div>
 					</div>
 				</nav>

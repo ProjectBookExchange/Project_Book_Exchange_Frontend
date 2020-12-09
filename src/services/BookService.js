@@ -18,10 +18,10 @@ class BookService {
     .then(response => response.data)
   }
 
- addToMyBooks = (title, image_path, owner) => {
-    return this.service.post("/myBooks", {title, image_path, owner})
-    .then(response => response.data)
-  }
+//  addToMyBooks = (title, image_path, owner) => {
+//     return this.service.post("/myBooks", {title, image_path, owner})
+//     .then(response => response.data)
+//   }
 
   getMyBooks = (owner) => {
     return this.service.post("/showMyBooks", {owner})
@@ -32,6 +32,28 @@ class BookService {
     return this.service.get(`/getUser/${userID}`, {userID})
     .then(response => response.data)
   }
+
+  errorHandler = (err) => {
+    // console.error(err);
+    throw err;
+  };
+  
+  handleUpload (theFile) {
+      // console.log('file in service: ', theFile)
+      return this.service.post('/uploadFile', theFile)
+        .then(res => {
+          console.log(res.data)
+          return res.data  
+        })
+        .catch(this.errorHandler);
+    }
+   
+  saveNewThing (newThing) {
+      // console.log('new thing is: ', newThing)
+      return this.service.post('/myBooks', newThing)
+        .then(res => res.data)
+        .catch(this.errorHandler);
+    }
 
 }
 

@@ -7,8 +7,7 @@ class Profile extends React.Component {
         books: [],
         newBook: {
             title: '',
-            image_name: '',
-            image_path: '',
+            imageUrl: '',
             owner: this.props.isLogged._id
         }
     }
@@ -17,19 +16,37 @@ class Profile extends React.Component {
 
     userID = this.props.isLogged._id
 
-    addBook = (event) => {
-        event.preventDefault()
-        this.service.addToMyBooks(this.state.newBook.title, this.state.newBook.image_path, this.state.newBook.owner)
-            .then((result) => console.log(result))
-            .catch((err) => console.log(err))
+    handleChange = e => {  
+        const { name, value } = e.target;
+        this.setState({ newBook: { ...this.state.newBook, [name]: value } })
+        // this.setState({newBook: { [name]: value }});
     }
 
-    changeHandlerAddBook(_eventTarget) {
-        this.setState({ newBook: { ...this.state.newBook, [_eventTarget.name]: _eventTarget.value } })
+    
+    handleFileUpload = e => {
+ 
+        const uploadData = new FormData();
+        uploadData.append("imageUrl", e.target.files[0]);
 
-        // const aNewBook = {...this.state.newBook}
-        // this.setState({books: {...this.state.books, aNewBook}})
+        this.service.handleUpload(uploadData)
+        .then(response => {
+            return this.setState({newBook: {...this.state.newBook, imageUrl: response.secure_url }});
+          })
+          .catch(err => {
+            console.log("Error while uploading the file: ", err);
+          });
     }
+    handleSubmit = e => {
+        e.preventDefault();
+        this.service.saveNewThing(this.state.newBook)
+        .then(res => {
+            console.log('added: ', res);
+            // here you would redirect to some other page 
+        })
+        .catch(err => {
+            console.log("Error while adding the thing: ", err);
+        });
+    }  
 
     componentDidMount() {
         this.service.getMyBooks(this.props.isLogged._id)
@@ -45,9 +62,17 @@ class Profile extends React.Component {
     renderMyBooks() {
         return this.state.books.map((book, index) => {
             return (
-                <div key={index} class="my-books-list">
-                    <p>{book.title}</p>
-                    <img src={book.image_path} alt={book.image_name}/>
+                <div key={index} class="col card-container">
+                    <div class="card h-100">
+                        <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+                        <div class="card-body">
+                            <h5 class="card-title">{book.title}</h5>
+                            {/* <p class="card-text">{book.owner.city} </p> */}
+                            <div class="card-footer">
+                                <small class="text-muted">Interested users: </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )
         })
@@ -67,37 +92,55 @@ class Profile extends React.Component {
                 <h2>Welcome, {this.props.isLogged.username}, this is your profile page</h2>
 
                 <h3>Add a Book</h3>
-                <br/>
-
-                <form encType="multipart/form-data">
+                <br />
+                <form onSubmit={e => this.handleSubmit(e)}>
 
                     <label htmlFor="title">Title: </label>
                     <input
                         type="text"
                         name="title"
-                        onChange={(event) => this.changeHandlerAddBook(event.target)}
+                        onChange={e => this.handleChange(e)}
                     />
-                    <br/>
+                    <br />
 
-                    <label htmlFor="image_path">Adjuntar imagen: </label>
+                    <label htmlFor="imageUrl">Adjuntar imagen: </label>
                     <input
                         type="file"
-                        name="image_path"
-                        onChange={(event) => this.changeHandlerAddBook(event.target)}
+                        // name="imageUrl"
+                        onChange={e => this.handleFileUpload(e)}
                     />
 
-                    <button onClick={this.addBook} type="submit">Añadir libro</button>
+                    {/* <input
+                        type="hidden"
+                        name="owner"
+                        value={this.props.isLogged._id}
+                        onChange={e => this.handleFileUpload(e)}
+                    /> */}
+
+                    <button type="submit">Añadir libro</button>
 
                 </form>
-                <br/>
+
+                <br />
 
                 <div>
                     <h3>Mis libros</h3>
-                    {/* {this.renderMyBooks()} */}
-                    {/* {this.state.books.map((book)=>{
-                    return <p>{book.title}</p>
-                })} */}
-                    {this.state.books.length === 0 ? this.renderSpinner() : this.renderMyBooks()}
+
+                    {this.state.books.length === 0
+                        ? this.renderSpinner()
+                        :
+                        <div class="container">
+                            <div class="row row-cols-2 row-cols-md-3 g-4">
+                                {this.renderMyBooks()}
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+                <div>
+                    <h3>My wishes</h3>
+
                 </div>
 
             </div>
