@@ -85,25 +85,31 @@ class App extends React.Component {
 		return (
 			<div className="App">
 
-				<nav class="navbar navbar-expand-lg navbar-light bg-light">
-					<Link class="navbar-brand" to="/">Home</Link>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<nav class="navbar navbar-expand-sm navbar-dark fixed-top nav-bar-styles">
+
+					<Link class="navbar-brand" to="/">
+						<img src="./images/bookBrand.png" alt="BookBrand"></img>
+						<span>BookExchange</span>
+					</Link>
+
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+						aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse" id="navbarNav">
-						<ul class="navbar-nav">
-							<li class="nav-item active">
-							</li>
-							<li class="nav-item">
-							{!this.state.isLogged.username && <Link class="nav-link" to="/signup">Sign Up</Link>}
-							</li>
-							<li class="nav-item">
-							{!this.state.isLogged.username && <Link class="nav-link" to="/login">Log In</Link>}
-							</li>
-							<li class="nav-item">
+
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<div class="navbar-nav mr-auto">
+
 							{this.state.isLogged.username && <Link class="nav-link" to="/profile">Profile</Link>}
-							</li>
-						</ul>
+
+						</div>
+						<div class="navbar-nav ml-auto">
+
+							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/signup">Sign Up</Link>}
+
+
+							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/login">Log In</Link>}
+						</div>
 					</div>
 				</nav>
 
@@ -111,7 +117,7 @@ class App extends React.Component {
 				{/* <Route exact path="/all-books" component={AllMangas} /> */}
 
 				<Route exact path="/" render={() => <Home logOut={this.logOut} isLogged={this.state.isLogged} />} />
-				
+
 
 
 				{/* <Route path='/all-mangas/:id' render={(props) => {
@@ -138,17 +144,17 @@ class App extends React.Component {
 						/>
 					)}
 				/>
-				
-				<Route 
-					path="/profile" 
-					render={()=>(
-					<Profile 
-						isLogged={this.state.isLogged}
-						
-					/>
+
+				<Route
+					path="/profile"
+					render={() => (
+						<Profile
+							isLogged={this.state.isLogged}
+
+						/>
 					)}
 
-					/>
+				/>
 
 
 			</div>

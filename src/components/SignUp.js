@@ -4,26 +4,34 @@ const SignUp = (props)=>{
   // const {submitSignUp, newUser, changeHandlerSignUp} = props
   return(
     <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={props.submitSignUp}>
 
-        <label htmlFor="username">Username: </label>
+      <form onSubmit={props.submitSignUp} class="form-sign-log-in">
+
+      <img class="mb-4" src="./images/bookBrand.png" alt="bookBrand" width="100"/>
+
+      <h1 class="h3 mb-3 fw-normal">Please Sign Up</h1>
+
+        <label htmlFor="username" class="visually-hidden"/>
         <input 
           type="text" 
-          name="username" 
-          value={props.newUser.username} 
+          name="username"
+          class="form-control"  
+          value={props.newUser.username}
+          placeholder="Username" 
           onChange={(event)=>props.changeHandlerSignUp(event.target)}
         />
 
-        <label htmlFor="password">Password: </label>
+        <label class="visually-hidden" htmlFor="password"/>
         <input 
-          type="password" 
+          type="password"
+          class="form-control" 
           name="password" 
-          value={props.newUser.password} 
+          value={props.newUser.password}
+          placeholder="Password" 
           onChange={(event)=>props.changeHandlerSignUp(event.target)}
         />
 
-        <button type="submit">Crear Usuario</button>
+        <button class="w-100 btn btn-lg" type="submit">Sign up</button>
 
       </form>
     </div>

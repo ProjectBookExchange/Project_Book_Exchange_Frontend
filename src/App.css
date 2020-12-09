@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 80px
 }
 
 .App-logo {
@@ -36,3 +37,35 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-bar-styles{
+  background-color: #6CAE75;
+}
+
+.nav-bar-styles a{
+  color: white
+}
+
+.navbar button{
+  color: white
+}
+
+.navbar img{
+  width: 30px;
+  margin-right: 7px;
+}
+
+.form-sign-log-in {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto
+}
+
+.form-sign-log-in button{
+  background-color: #8BBD8B;
+  color: white;
+  margin-top: 20px
+}
+
+
