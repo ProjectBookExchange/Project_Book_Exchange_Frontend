@@ -13,6 +13,11 @@ class BookService {
     this.service = service;
   }
 
+  getAllBooks = () => {
+    return this.service.post("/allBooks")
+    .then(response => response.data)
+  }
+
  addToMyBooks = (title, image, owner) => {
     return this.service.post("/myBooks", {title, image, owner})
     .then(response => response.data)
