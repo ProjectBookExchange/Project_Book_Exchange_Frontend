@@ -33,6 +33,11 @@ class UserService {
     return this.service.post("/logout", {})
     .then(response => response.data)
   }
+
+  viewPublicProfile = (userID)=>{
+    return this.service.post(`/publicProfile/${userID}`, {userID})
+    .then(response => response.data)
+  }
 }
 
 export default UserService;

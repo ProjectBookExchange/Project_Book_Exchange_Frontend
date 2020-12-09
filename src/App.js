@@ -7,10 +7,9 @@ import './App.css';
 
 import SignUp from './components/SignUp';
 import Home from './components/Home';
-// import AllBooks from './components/AllBooks';
-// import IndividualManga from './components/IndividualManga';
 import LogIn from './components/LogIn';
 import Profile from './components/Profile';
+import PublicProfile from './components/PublicProfile';
 
 import { Link, Route, Redirect } from 'react-router-dom';
 import UserService from './services/UserService';
@@ -153,12 +152,18 @@ class App extends React.Component {
 					render={() => (
 						<Profile
 							isLogged={this.state.isLogged}
-
 						/>
 					)}
-
 				/>
 
+				<Route
+                  path="/publicProfile/:id"
+                  render={(props) => {
+					  return(
+						  <PublicProfile {...props}/>
+					  )
+				  }}
+                />
 
 			</div>
 		);

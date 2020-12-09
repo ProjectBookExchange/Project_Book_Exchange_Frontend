@@ -1,6 +1,8 @@
 import React from 'react'
 import BookService from '../services/BookService'
 
+import { Link } from 'react-router-dom';
+
 
 class Home extends React.Component {
 
@@ -39,10 +41,12 @@ class Home extends React.Component {
               <h5 class="card-title">{book.title}</h5>
               <p class="card-text">{book.owner.city} </p>
               <div class="card-footer">
-                <small class="text-muted">{book.owner.username}</small>
+
+               <small> User: <Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}> {book.owner.username}</Link></small>
               </div>
             </div>
           </div>
+
         </div>
       )
     })
@@ -65,7 +69,9 @@ class Home extends React.Component {
               {this.renderAllBooks()}
             </div>
           </div>
+          
         }
+
       </div>
     )
   }
