@@ -20,7 +20,7 @@ class App extends React.Component {
 
 	state = {
 		isLogged: {},
-		newUser: { username: '', password: '' },
+		newUser: { username: '', password: '', name:'', city: '' },
 		loggingUser: { username: '', password: '' },
 	}
 
@@ -29,7 +29,7 @@ class App extends React.Component {
 	//SIGNUP CONFIG
 	submitSignUp = (event) => {
 		event.preventDefault();
-		this.service.signup(this.state.newUser.username, this.state.newUser.password)
+		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city)
 			.then((result) => {
 				console.log(result);
 			})

@@ -7,7 +7,8 @@ class Profile extends React.Component {
         books: [],
         newBook: {
             title: '',
-            image: '',
+            image_name: '',
+            image_path: '',
             owner: this.props.isLogged._id
         }
     }
@@ -18,7 +19,7 @@ class Profile extends React.Component {
 
     addBook = (event) => {
         event.preventDefault()
-        this.service.addToMyBooks(this.state.newBook.title, this.state.newBook.image, this.state.newBook.owner)
+        this.service.addToMyBooks(this.state.newBook.title, this.state.newBook.image_path, this.state.newBook.owner)
             .then((result) => console.log(result))
             .catch((err) => console.log(err))
     }
@@ -44,8 +45,9 @@ class Profile extends React.Component {
     renderMyBooks() {
         return this.state.books.map((book, index) => {
             return (
-                <div key={index}>
+                <div key={index} class="my-books-list">
                     <p>{book.title}</p>
+                    <img src={book.image_path} alt={book.image_name}/>
                 </div>
             )
         })
@@ -65,8 +67,9 @@ class Profile extends React.Component {
                 <h2>Welcome, {this.props.isLogged.username}, this is your profile page</h2>
 
                 <h3>Add a Book</h3>
+                <br/>
 
-                <form>
+                <form encType="multipart/form-data">
 
                     <label htmlFor="title">Title: </label>
                     <input
@@ -74,17 +77,19 @@ class Profile extends React.Component {
                         name="title"
                         onChange={(event) => this.changeHandlerAddBook(event.target)}
                     />
+                    <br/>
 
-                    <label htmlFor="image">Image: </label>
+                    <label htmlFor="image_path">Adjuntar imagen: </label>
                     <input
-                        type="text"
-                        name="image"
+                        type="file"
+                        name="image_path"
                         onChange={(event) => this.changeHandlerAddBook(event.target)}
                     />
 
                     <button onClick={this.addBook} type="submit">Añadir libro</button>
 
                 </form>
+                <br/>
 
                 <div>
                     <h3>Mis libros</h3>

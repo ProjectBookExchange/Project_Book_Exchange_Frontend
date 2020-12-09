@@ -18,8 +18,8 @@ class BookService {
     .then(response => response.data)
   }
 
- addToMyBooks = (title, image, owner) => {
-    return this.service.post("/myBooks", {title, image, owner})
+ addToMyBooks = (title, image_path, owner) => {
+    return this.service.post("/myBooks", {title, image_path, owner})
     .then(response => response.data)
   }
 

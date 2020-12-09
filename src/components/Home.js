@@ -32,8 +32,10 @@ renderSpinner = () => {
 renderAllBooks = () => {
   return this.state.books.map((book, index)=>{
     return(
-      <div key={index}>
+      <div key={index} className="all-books-list">
             <p>{book.title}</p>
+            <img src={book.image_path} alt={book.image_name}/>
+            <p>{book.owner.city}</p>
             <p>{book.owner.username}</p>
       </div>
 

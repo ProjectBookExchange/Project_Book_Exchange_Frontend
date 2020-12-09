@@ -11,17 +11,26 @@ const SignUp = (props)=>{
 
       <h1 class="h3 mb-3 fw-normal">Please Sign Up</h1>
 
-        <label htmlFor="username" class="visually-hidden"/>
-        <input 
+      <input 
           type="text" 
           name="username"
           class="form-control"  
           value={props.newUser.username}
           placeholder="Username" 
           onChange={(event)=>props.changeHandlerSignUp(event.target)}
+          required
         />
 
-        <label class="visually-hidden" htmlFor="password"/>
+        <input 
+          type="text" 
+          name="city"
+          class="form-control"  
+          value={props.newUser.city}
+          placeholder="City" 
+          onChange={(event)=>props.changeHandlerSignUp(event.target)}
+          required
+        />
+
         <input 
           type="password"
           class="form-control" 
@@ -29,6 +38,7 @@ const SignUp = (props)=>{
           value={props.newUser.password}
           placeholder="Password" 
           onChange={(event)=>props.changeHandlerSignUp(event.target)}
+          required
         />
 
         <button class="w-100 btn btn-lg" type="submit">Sign up</button>

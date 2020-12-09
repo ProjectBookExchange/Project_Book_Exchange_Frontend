@@ -68,4 +68,18 @@
   margin-top: 20px
 }
 
+.all-books-list{
+  border: 1px solid black
+}
 
+.all-books-list img{
+  width: 100px
+}
+
+.my-books-list{
+  border: 1px solid black;
+}
+
+.my-books-list img{
+  width: 100px
+}
