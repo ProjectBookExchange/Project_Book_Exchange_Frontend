@@ -47,11 +47,14 @@ class Home extends React.Component {
           <div class="card h-100">
             <img src={book.imageUrl} class="card-img-top" alt={book.title} />
             <div class="card-body">
-              <button onClick={() => this.addToMyWishes(book)}>I wish</button>
-              <h5 class="card-title">{book.title}</h5>
-              <p class="card-text">{book.owner.city} </p>
+              <h6 class="card-title">{book.title}</h6>
+              <p class="card-text">{book.author}</p>
+              <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
               <div class="card-footer">
-                <small> User: <Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}> {book.owner.username}</Link></small>
+              
+                <small><Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}>User: {book.owner.username}</Link>
+                <img id="locationIcon" src="./images/locationIcon.png" alt="locationIcon"/> {book.owner.city}
+                </small>
               </div>
             </div>
           </div>
@@ -77,7 +80,9 @@ class Home extends React.Component {
           ? this.renderSpinner()
           :
           <div class="container">
+            {/* <div class="row row-cols-2 row-cols-md-4 g-4"> */}
             <div class="row row-cols-2 row-cols-md-4 g-4">
+
               {this.renderAllBooks()}
             </div>
           </div>

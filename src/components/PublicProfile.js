@@ -50,6 +50,7 @@ class PublicProfile extends React.Component {
                                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                                         <div class="card-body">
                                             <h5 class="card-title">{book.title}</h5>
+                                            <p class="card-text">{book.author}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +70,8 @@ class PublicProfile extends React.Component {
                                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                                         <div class="card-body">
                                             <h5 class="card-title">{book.title}</h5>
-                                            <button onClick={() => this.moveBorrowed(book, this.state.userProfile)}>Borrowed</button>
+                                            <p class="card-text">{book.author}</p>
+                                            <button class="btn" type="button" onClick={() => this.moveBorrowed(book, this.state.userProfile)}>Lend</button>
                                         </div>
                                     </div>
                                 </div>

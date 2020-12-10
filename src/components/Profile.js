@@ -12,6 +12,7 @@ class Profile extends React.Component {
         myWishes: [],
         newBook: {
             title: '',
+            author:'',
             imageUrl: '',
             owner: this.props.isLogged._id,
             owner_name: this.props.isLogged.username
@@ -26,10 +27,6 @@ class Profile extends React.Component {
     handleChange = e => {
         const { name, value } = e.target;
         this.setState({ newBook: { ...this.state.newBook, [name]: value } })
-    }
-
-    checkboxChange = e => {
-        console.log(e.target)
     }
 
     handleFileUpload = e => {
@@ -90,6 +87,7 @@ class Profile extends React.Component {
                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
+                            <p class="card-text">{book.author}</p>
                             <div class="card-footer">
                                 <small class="text-muted">Interested:</small><br/>
                                 {book.interestedUsers.map((user, index) => {
@@ -121,7 +119,7 @@ class Profile extends React.Component {
                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
-                            {/* <p class="card-text">{book.owner.city} </p> */}
+                            <p class="card-text">{book.author}</p>
                             <div class="card-footer">
                                 <small class="text-muted">User: 
                                 <Link to={`/publicProfile/${book.owner}`}>
@@ -164,6 +162,14 @@ class Profile extends React.Component {
                     <input
                         type="text"
                         name="title"
+                        onChange={e => this.handleChange(e)}
+                    />
+                    <br />
+
+                    <label htmlFor="author">Author: </label>
+                    <input
+                        type="text"
+                        name="author"
                         onChange={e => this.handleChange(e)}
                     />
                     <br />

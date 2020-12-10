@@ -16,7 +16,6 @@ class Exchanges extends React.Component {
             })
             .then((exchanges) => {
                 this.setState({ myExchanges: exchanges })
-                console.log(this.state.myExchanges)
             })
             .catch((err) => {
                 console.log(err)

@@ -2,9 +2,6 @@
 .App {
   text-align: center;
   margin-top: 80px;
-  /* background-size: cover; */
-  /* background-color: coral; */ 
-  /* background-image: url('./images/backgroundImage.png')  */
 }
 
 .App-logo {
@@ -92,10 +89,41 @@
   margin-bottom: 20px
 }
 
+.card-body{
+  padding: 0rem;
+}
+
 .public-profile{
   margin-top: 100px
 }
 
 .exchange-container img{
  width: 100px
+}
+
+.btn {
+  background-color: #AAC68E;
+  padding: 2px 5px;
+  color: white
+}
+
+.card-body{
+  margin-top: 10px
+}
+
+.card-text{
+  font-size: 0.8rem;
+}
+
+.card-footer{
+  margin-top: 10px;
+  padding: 0px;
+}
+
+.card-footer .nav-item{
+  color: #819472;
+}
+
+#locationIcon{
+  width: 20px;
 }
