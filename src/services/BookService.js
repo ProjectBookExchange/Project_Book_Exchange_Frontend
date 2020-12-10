@@ -18,13 +18,18 @@ class BookService {
     .then(response => response.data)
   }
 
-//  addToMyBooks = (title, image_path, owner) => {
-//     return this.service.post("/myBooks", {title, image_path, owner})
-//     .then(response => response.data)
-//   }
-
   getMyBooks = (owner) => {
     return this.service.post("/showMyBooks", {owner})
+    .then(response => response.data)
+  }
+
+  addWish = (book, userID, userName) => {
+    return this.service.post("/addWish", {book, userID, userName})
+    .then(response => response.data)
+  }
+
+  viewMyWishes = (userID) => {
+    return this.service.post("/viewWishes", {userID})
     .then(response => response.data)
   }
 

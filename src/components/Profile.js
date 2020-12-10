@@ -5,6 +5,7 @@ class Profile extends React.Component {
 
     state = {
         books: [],
+        myWhishes: [],
         newBook: {
             title: '',
             imageUrl: '',
@@ -59,6 +60,17 @@ class Profile extends React.Component {
             .catch((err) => console.log(err))
     }
 
+    // getMyWishes () {
+    //     this.service.viewMyWishes(this.props.isLogged._id)
+    //     .then((result) => {
+    //         return result
+    //     })
+    //     .then((myWishes) => {
+    //         this.setState({myWishes: myWishes})
+    //     })
+    //     .catch((err) => console.log(err))
+    // }
+
     renderMyBooks() {
         return this.state.books.map((book, index) => {
             return (
@@ -69,7 +81,7 @@ class Profile extends React.Component {
                             <h5 class="card-title">{book.title}</h5>
                             {/* <p class="card-text">{book.owner.city} </p> */}
                             <div class="card-footer">
-                                <small class="text-muted">Interested users: </small>
+            <small class="text-muted">Interested users: {book.interestedUsers}</small>
                             </div>
                         </div>
                     </div>
@@ -77,6 +89,25 @@ class Profile extends React.Component {
             )
         })
     }
+
+    // renderMyWishes(){
+    //     return this.state.books.map((book, index) => {
+    //         return (
+    //             <div key={index} class="col card-container">
+    //                 <div class="card h-100">
+    //                     <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+    //                     <div class="card-body">
+    //                         <h5 class="card-title">{book.title}</h5>
+    //                         {/* <p class="card-text">{book.owner.city} </p> */}
+    //                         <div class="card-footer">
+    //         <small class="text-muted">Interested users: {book.interestedUsers}</small>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     })
+    // }
 
     renderSpinner = () => {
         return (
@@ -140,7 +171,7 @@ class Profile extends React.Component {
 
                 <div>
                     <h3>My wishes</h3>
-
+                    {/* {this.getMyWishes()} */}
                 </div>
 
             </div>

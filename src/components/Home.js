@@ -31,6 +31,14 @@ class Home extends React.Component {
     )
   }
 
+  addToMyWishes = (book) => {
+    const userID = this.props.isLogged._id
+    const userName = this.props.isLogged.username
+    this.service.addWish(book, userID, userName)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err))
+  }
+
   renderAllBooks = () => {
     return this.state.books.map((book, index) => {
       return (
@@ -38,11 +46,11 @@ class Home extends React.Component {
           <div class="card h-100">
             <img src={book.imageUrl} class="card-img-top" alt={book.title} />
             <div class="card-body">
+              <button onClick={() => this.addToMyWishes(book)}>I wish</button>
               <h5 class="card-title">{book.title}</h5>
               <p class="card-text">{book.owner.city} </p>
               <div class="card-footer">
-
-               <small> User: <Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}> {book.owner.username}</Link></small>
+                <small> User: <Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}> {book.owner.username}</Link></small>
               </div>
             </div>
           </div>
@@ -69,7 +77,7 @@ class Home extends React.Component {
               {this.renderAllBooks()}
             </div>
           </div>
-          
+
         }
 
       </div>

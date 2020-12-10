@@ -20,7 +20,7 @@ class App extends React.Component {
 
 	state = {
 		isLogged: {},
-		newUser: { username: '', password: '', name:'', city: '' },
+		newUser: { username: '', password: '', city: '' },
 		loggingUser: { username: '', password: '' },
 	}
 
