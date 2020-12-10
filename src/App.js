@@ -30,9 +30,9 @@ class App extends React.Component {
 	submitSignUp = (event) => {
 		event.preventDefault();
 		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city)
-			.then((result) => {
-				console.log(result);
-			})
+			.then((result) => 
+				result
+			)
 			.catch((err) => {
 				console.log(err);
 			});

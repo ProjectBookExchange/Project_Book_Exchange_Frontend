@@ -1,6 +1,8 @@
 import React from 'react'
 import BookService from '../services/BookService'
 
+import { Link } from 'react-router-dom';
+
 class Profile extends React.Component {
 
     state = {
@@ -18,37 +20,37 @@ class Profile extends React.Component {
 
     userID = this.props.isLogged._id
 
-    handleChange = e => {  
+    handleChange = e => {
         const { name, value } = e.target;
         this.setState({ newBook: { ...this.state.newBook, [name]: value } })
         // this.setState({newBook: { [name]: value }});
     }
 
-    
+
     handleFileUpload = e => {
- 
+
         const uploadData = new FormData();
         uploadData.append("imageUrl", e.target.files[0]);
 
         this.service.handleUpload(uploadData)
-        .then(response => {
-            return this.setState({newBook: {...this.state.newBook, imageUrl: response.secure_url }});
-          })
-          .catch(err => {
-            console.log("Error while uploading the file: ", err);
-          });
+            .then(response => {
+                return this.setState({ newBook: { ...this.state.newBook, imageUrl: response.secure_url } });
+            })
+            .catch(err => {
+                console.log("Error while uploading the file: ", err);
+            });
     }
     handleSubmit = e => {
         e.preventDefault();
         this.service.saveNewThing(this.state.newBook)
-        .then(res => {
-            console.log('added: ', res);
-            // here you would redirect to some other page 
-        })
-        .catch(err => {
-            console.log("Error while adding the thing: ", err);
-        });
-    }  
+            .then(res => {
+                console.log('added: ', res);
+                // here you would redirect to some other page 
+            })
+            .catch(err => {
+                console.log("Error while adding the thing: ", err);
+            });
+    }
 
     componentDidMount() {
         this.service.getMyBooks(this.props.isLogged._id)
@@ -60,18 +62,17 @@ class Profile extends React.Component {
                 this.getMyWishes()
             })
             .catch((err) => console.log(err))
-
     }
 
-    getMyWishes () {
+    getMyWishes() {
         this.service.viewMyWishes(this.props.isLogged._id)
-        .then((result) => {
-            return result
-        })
-        .then((wishesData) => {
-            this.setState({myWishes: wishesData})
-        })
-        .catch((err) => console.log(err))
+            .then((result) => {
+                return result
+            })
+            .then((wishesData) => {
+                this.setState({ myWishes: wishesData })
+            })
+            .catch((err) => console.log(err))
     }
 
     renderMyBooks() {
@@ -84,7 +85,16 @@ class Profile extends React.Component {
                             <h5 class="card-title">{book.title}</h5>
                             {/* <p class="card-text">{book.owner.city} </p> */}
                             <div class="card-footer">
-            <small class="text-muted">Interested users: {book.interestedUsers}</small>
+
+                                {book.interestedUsers.map((user) => {
+                                    return (
+                                        <small class="text-muted">Interested users:
+                                            <Link to={`/publicProfile/${user.interestedUserID}`}>
+                                                {user.interestedUserName}
+                                            </Link>
+                                        </small>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
@@ -93,7 +103,7 @@ class Profile extends React.Component {
         })
     }
 
-    renderMyWishes(){
+    renderMyWishes() {
         return this.state.myWishes.map((book, index) => {
             return (
                 <div key={index} class="col card-container">
@@ -103,7 +113,13 @@ class Profile extends React.Component {
                             <h5 class="card-title">{book.title}</h5>
                             {/* <p class="card-text">{book.owner.city} </p> */}
                             <div class="card-footer">
-            <small class="text-muted">User: {book.owner_name}</small>
+                                <small class="text-muted">User: 
+                                <Link to={`/publicProfile/${book.owner}`}>
+                                {book.owner_name}
+                                </Link>
+                                
+                                </small>
+
                             </div>
                         </div>
                     </div>
