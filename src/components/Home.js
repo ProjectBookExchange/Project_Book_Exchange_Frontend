@@ -41,6 +41,7 @@ class Home extends React.Component {
 
   renderAllBooks = () => {
     return this.state.books.map((book, index) => {
+      if (book.borrowedUser === ''){
       return (
         <div class="col card-container" key={index}>
           <div class="card h-100">
@@ -55,8 +56,11 @@ class Home extends React.Component {
             </div>
           </div>
 
-        </div>
+        </div> 
       )
+    } else {
+      return
+    }
     })
   }
 

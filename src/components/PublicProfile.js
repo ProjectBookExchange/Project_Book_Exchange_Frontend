@@ -1,5 +1,6 @@
 import React from 'react'
 import UserService from '../services/UserService'
+import ExchangeService from '../services/ExchangeService'
 
 class PublicProfile extends React.Component {
 
@@ -8,6 +9,7 @@ class PublicProfile extends React.Component {
     }
 
     service = new UserService()
+    serviceExchange = new ExchangeService()
 
     componentDidMount() {
         this.service.viewPublicProfile(this.props.match.params.id)
@@ -20,6 +22,14 @@ class PublicProfile extends React.Component {
             .catch((err) => console.log(err))
     }
 
+    moveBorrowed = (book, profile) => {
+        this.serviceExchange.moveBorrowedBooks(book, profile)
+        .then((result)=>{
+            console.log(result)
+        })
+        .catch((err)=>console.log(err))
+    }
+
     renderPublicProfile = () => {
         return (
             <div className="user-profile">
@@ -30,6 +40,7 @@ class PublicProfile extends React.Component {
 
                 <br/>
 
+                <h2>Published</h2>
                 <div class="container">
                     <div class="row row-cols-2 row-cols-md-4 g-4">
                         {this.state.userProfile.myBooks.map((book, index) => {
@@ -46,6 +57,33 @@ class PublicProfile extends React.Component {
                         })}
                     </div>
                 </div>
+
+                <h2>Want your book</h2>
+                <div class="container">
+                    <div class="row row-cols-2 row-cols-md-4 g-4">
+                        {this.state.userProfile.wishList.map((book, index) => {
+                            if (this.props.isLogged.username === book.owner_name){
+                            return (
+                                <div class="col card-container" key={index}>
+                                    <div class="card h-100">
+                                        <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+                                        <div class="card-body">
+                                            <h5 class="card-title">{book.title}</h5>
+                                            <button onClick={() => this.moveBorrowed(book, this.state.userProfile)}>Borrowed</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                            } else {
+                                return
+                            }
+
+                        })}
+                    </div>
+                </div>
+
+
+
             </div>
         )
     }

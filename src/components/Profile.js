@@ -1,7 +1,9 @@
 import React from 'react'
 import BookService from '../services/BookService'
+import ExchangeService from '../services/ExchangeService';
 
 import { Link } from 'react-router-dom';
+
 
 class Profile extends React.Component {
 
@@ -17,15 +19,18 @@ class Profile extends React.Component {
     }
 
     service = new BookService()
+    serviceExchange = new ExchangeService()
 
     userID = this.props.isLogged._id
 
     handleChange = e => {
         const { name, value } = e.target;
         this.setState({ newBook: { ...this.state.newBook, [name]: value } })
-        // this.setState({newBook: { [name]: value }});
     }
 
+    checkboxChange = e => {
+        console.log(e.target)
+    }
 
     handleFileUpload = e => {
 
@@ -40,6 +45,7 @@ class Profile extends React.Component {
                 console.log("Error while uploading the file: ", err);
             });
     }
+
     handleSubmit = e => {
         e.preventDefault();
         this.service.saveNewThing(this.state.newBook)
@@ -77,22 +83,20 @@ class Profile extends React.Component {
 
     renderMyBooks() {
         return this.state.books.map((book, index) => {
+            if (book.borrowedUser === ''){
             return (
                 <div key={index} class="col card-container">
                     <div class="card h-100">
                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
-                            {/* <p class="card-text">{book.owner.city} </p> */}
                             <div class="card-footer">
-
-                                {book.interestedUsers.map((user) => {
+                                <small class="text-muted">Interested:</small><br/>
+                                {book.interestedUsers.map((user, index) => {
                                     return (
-                                        <small class="text-muted">Interested users:
-                                            <Link to={`/publicProfile/${user.interestedUserID}`}>
+                                            <small class="text-muted"><Link to={`/publicProfile/${user.interestedUserID}`}>
                                                 {user.interestedUserName}
-                                            </Link>
-                                        </small>
+                                            </Link>, </small>
                                     )
                                 })}
                             </div>
@@ -100,11 +104,17 @@ class Profile extends React.Component {
                     </div>
                 </div>
             )
+
+            } else {
+                return
+            }
+
         })
     }
 
     renderMyWishes() {
         return this.state.myWishes.map((book, index) => {
+            if (book.borrowedUser === ''){
             return (
                 <div key={index} class="col card-container">
                     <div class="card h-100">
@@ -125,6 +135,11 @@ class Profile extends React.Component {
                     </div>
                 </div>
             )
+
+            } else {
+                return
+            }
+
         })
     }
 

@@ -10,6 +10,7 @@ import Home from './components/Home';
 import LogIn from './components/LogIn';
 import Profile from './components/Profile';
 import PublicProfile from './components/PublicProfile';
+import Exchanges from './components/Exchanges';
 
 import { Link, Route, Redirect } from 'react-router-dom';
 import UserService from './services/UserService';
@@ -101,6 +102,8 @@ class App extends React.Component {
 
 							{this.state.isLogged.username && <Link class="nav-link" to="/profile">Profile</Link>}
 
+							{this.state.isLogged.username && <Link class="nav-link" to="/exchanges">Exchanges</Link>}
+
 						</div>
 						<div class="navbar-nav ml-auto">
 
@@ -160,10 +163,19 @@ class App extends React.Component {
                   path="/publicProfile/:id"
                   render={(props) => {
 					  return(
-						  <PublicProfile {...props}/>
+						  <PublicProfile {...props} isLogged={this.state.isLogged}/>
 					  )
 				  }}
                 />
+
+				<Route
+					path="/exchanges"
+					render={() => (
+						<Exchanges
+							isLogged={this.state.isLogged}
+						/>
+					)}
+				/>
 
 			</div>
 		);
