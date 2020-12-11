@@ -7,12 +7,14 @@ import { Link } from 'react-router-dom';
 class Home extends React.Component {
 
   state = {
-    books: []
+    books: [],
+    searchedBooks: []
   }
 
   service = new BookService()
 
   componentDidMount() {
+    
     this.service.getAllBooks()
       .then((result) => {
         return result
@@ -39,31 +41,50 @@ class Home extends React.Component {
       .catch((err) => console.log(err))
   }
 
+  searchBook = (event) => {
+    event.preventDefault();
+		this.service.searchBooks(this.state.searchedBooks.owner_city, this.state.searchedBooks.title)
+			.then((result) => {
+        return result
+      })
+      .then((searched)=>{
+        this.setState({books: searched})
+      })
+			.catch((err) => {
+				console.log(err);
+			});
+  }
+
+  changeInputsSearch = (_eventTarget) => {
+    this.setState({ searchedBooks: { ...this.state.searchedBooks, [_eventTarget.name]: _eventTarget.value } });
+
+  }
+
   renderAllBooks = () => {
     return this.state.books.map((book, index) => {
-      if (book.borrowedUser === ''){
-      return (
-        <div class="col card-container" key={index}>
-          <div class="card h-100">
-            <img src={book.imageUrl} class="card-img-top" alt={book.title} />
-            <div class="card-body">
-              <h6 class="card-title">{book.title}</h6>
-              <p class="card-text">{book.author}</p>
-              <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
-              <div class="card-footer">
-              
-                <small><Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}>User: {book.owner.username}</Link>
-                <img id="locationIcon" src="./images/locationIcon.png" alt="locationIcon"/> {book.owner.city}
-                </small>
+      if (book.borrowedUser === '') {
+        return (
+          <div class="col card-container" key={index}>
+            <div class="card h-100">
+              <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+              <div class="card-body">
+                <h6 class="card-title">{book.title}</h6>
+                <p class="card-text">{book.author}</p>
+                <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
+                <div class="card-footer">
+
+                  <small><Link class="nav-item nav-link" to={`/publicProfile/${book.owner._id}`}>User: {book.owner.username}</Link>
+                    <img id="locationIcon" src="./images/locationIcon.png" alt="locationIcon" /> {book.owner_city}
+                  </small>
+                </div>
               </div>
             </div>
-          </div>
 
-        </div> 
-      )
-    } else {
-      return
-    }
+          </div>
+        )
+      } else {
+        return '';
+      }
     })
   }
 
@@ -73,21 +94,33 @@ class Home extends React.Component {
         <h2>Home</h2>
         {/* <h3>{this.props.isLogged.username && `Welcome, ${this.props.isLogged.username}`}</h3> */}
 
-        <br />
-        <br />
+        {/* <button onClick={this.searchBook}>Search</button> */}
 
-        {this.state.books.length === 0
-          ? this.renderSpinner()
-          :
-          <div class="container">
-            {/* <div class="row row-cols-2 row-cols-md-4 g-4"> */}
-            <div class="row row-cols-2 row-cols-md-4 g-4">
+        <form class="search-bar" onSubmit={this.searchBook}>
 
-              {this.renderAllBooks()}
+          <input class="form-control me-2" type="text" placeholder="city"  name="owner_city" onChange={(event)=>this.changeInputsSearch(event.target)}/>
+
+          <input class="form-control me-2" type="search" placeholder="title"  name="title" onChange={(event)=>this.changeInputsSearch(event.target)}/>
+
+            <button class="btn btn-outline-success" type="submit">Search</button>
+
+        </form>
+
+          <br />
+          <br />
+
+          {this.state.books.length === 0
+            ? this.renderSpinner()
+            :
+            <div class="container">
+              {/* <div class="row row-cols-2 row-cols-md-4 g-4"> */}
+              <div class="row row-cols-2 row-cols-md-4 g-4">
+
+                {this.renderAllBooks()}
+              </div>
             </div>
-          </div>
 
-        }
+          }
 
       </div>
     )

@@ -77,7 +77,7 @@ class PublicProfile extends React.Component {
                                 </div>
                             )
                             } else {
-                                return
+                                return ''
                             }
 
                         })}

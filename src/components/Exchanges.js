@@ -30,7 +30,7 @@ class Exchanges extends React.Component {
                     
                     {exchange.borrowed.map((borrowed, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <h3>Borrowed:</h3>
                                 <p>{exchange.userPartner}</p>
                                 <p>{borrowed.title}</p>
@@ -40,7 +40,7 @@ class Exchanges extends React.Component {
                     })}
                     {exchange.acquired.map((acquired, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <h3>Acquired:</h3>
                                 <p>{exchange.userPartner}</p>
                                 <p>{acquired.title}</p>

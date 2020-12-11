@@ -18,6 +18,11 @@ class BookService {
     .then(response => response.data)
   }
 
+  searchBooks = (city, title) => {
+    return this.service.post("/showSearchedBooks", {city, title})
+    .then(response => response.data)
+  }
+
   getMyBooks = (owner) => {
     return this.service.post("/showMyBooks", {owner})
     .then(response => response.data)
@@ -39,7 +44,6 @@ class BookService {
   }
 
   errorHandler = (err) => {
-    // console.error(err);
     throw err;
   };
   

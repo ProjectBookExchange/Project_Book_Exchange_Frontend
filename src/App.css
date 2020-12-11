@@ -127,3 +127,8 @@
 #locationIcon{
   width: 20px;
 }
+
+.search-bar{
+  width: 80%;
+  margin: auto
+}

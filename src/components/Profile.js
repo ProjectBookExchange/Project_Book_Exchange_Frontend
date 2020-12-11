@@ -15,7 +15,8 @@ class Profile extends React.Component {
             author:'',
             imageUrl: '',
             owner: this.props.isLogged._id,
-            owner_name: this.props.isLogged.username
+            owner_name: this.props.isLogged.username,
+            owner_city: this.props.isLogged.city
         }
     }
 
@@ -104,7 +105,7 @@ class Profile extends React.Component {
             )
 
             } else {
-                return
+                return ''
             }
 
         })
@@ -135,7 +136,7 @@ class Profile extends React.Component {
             )
 
             } else {
-                return
+                return ''
             }
 
         })

@@ -139,6 +139,7 @@ class App extends React.Component {
 							: <Redirect to='/' />
 					)}
 				/>
+				
 				<Route
 					path="/login"
 					render={() => (
