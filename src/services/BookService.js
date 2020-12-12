@@ -69,6 +69,11 @@ class BookService {
     .then(response => response.data)
   }
 
+  deleteMyWishBook(book, userID) {
+    return this.service.post("/removeMyWishBook", {book, userID})
+    .then(response => response.data)
+  }
+
 }
 
 export default BookService;

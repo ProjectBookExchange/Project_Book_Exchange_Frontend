@@ -100,6 +100,14 @@ class Profile extends React.Component {
         .catch((err)=> console.log(err))
     }
 
+    removeMyWishBook(book){
+        this.service.deleteMyWishBook(book, this.userID)
+        .then(()=>{
+            this.rerender()
+        })
+        .catch((err)=> console.log(err))
+    }
+
     renderMyBooks() {
         return this.state.books.map((book, index) => {
             if (book.borrowedUser === ''){
@@ -143,7 +151,7 @@ class Profile extends React.Component {
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
                             <p class="card-text">{book.author}</p>
-                            <button class="btn btn-delete">Remove</button>
+                            <button onClick={()=>this.removeMyWishBook(book)} class="btn btn-delete">Remove</button>
                             <div class="card-footer">
                                 <small class="text-muted">User: 
                                 <Link to={`/publicProfile/${book.owner}`}>
@@ -165,13 +173,6 @@ class Profile extends React.Component {
         })
     }
 
-    renderSpinner = () => {
-        return (
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        )
-    }
 
     render() {
         return (
@@ -221,7 +222,7 @@ class Profile extends React.Component {
                 <div>
                     <h3>Mis libros</h3>
                     {this.state.books.length === 0
-                        ? this.renderSpinner()
+                        ? ''
                         :
                         <div class="container">
                             <div class="row row-cols-2 row-cols-md-3 g-4">
@@ -234,7 +235,7 @@ class Profile extends React.Component {
                 <div>
                     <h3>My wishes</h3>
                     {this.state.myWishes.length === 0
-                        ? this.renderSpinner()
+                        ? ''
                         :
                         <div class="container">
                             <div class="row row-cols-2 row-cols-md-3 g-4">

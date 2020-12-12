@@ -2,6 +2,9 @@ import React from 'react'
 import UserService from '../services/UserService'
 import ExchangeService from '../services/ExchangeService'
 
+// import { Link, Redirect } from 'react-router-dom';
+
+
 class PublicProfile extends React.Component {
 
     state = {
@@ -26,6 +29,7 @@ class PublicProfile extends React.Component {
         this.serviceExchange.moveBorrowedBooks(book, profile)
         .then((result)=>{
             console.log(result)
+        //    <Redirect to="/exchanges"/>
         })
         .catch((err)=>console.log(err))
     }
@@ -44,7 +48,8 @@ class PublicProfile extends React.Component {
                 <div class="container">
                     <div class="row row-cols-2 row-cols-md-4 g-4">
                         {this.state.userProfile.myBooks.map((book, index) => {
-                            return (
+                            if (book.borrowedUser === ''){
+                              return (
                                 <div class="col card-container" key={index}>
                                     <div class="card h-100">
                                         <img src={book.imageUrl} class="card-img-top" alt={book.title} />
@@ -54,7 +59,10 @@ class PublicProfile extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            )
+                            )  
+                            } else {
+                                return ''
+                            }
                         })}
                     </div>
                 </div>
@@ -63,7 +71,7 @@ class PublicProfile extends React.Component {
                 <div class="container">
                     <div class="row row-cols-2 row-cols-md-4 g-4">
                         {this.state.userProfile.wishList.map((book, index) => {
-                            if (this.props.isLogged.username === book.owner_name){
+                            if (this.props.isLogged.username === book.owner_name && (book.borrowedUser === '')){
                             return (
                                 <div class="col card-container" key={index}>
                                     <div class="card h-100">
