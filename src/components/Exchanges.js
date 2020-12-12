@@ -1,6 +1,11 @@
 import React from 'react'
 import ExchangeService from '../services/ExchangeService'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import '../styles/exchanges.css';
+
+
 class Exchanges extends React.Component {
 
     state = {
@@ -53,20 +58,12 @@ class Exchanges extends React.Component {
         })
     }
 
-    renderSpinner = () => {
-        return (
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        )
-    }
-
     render() {
         return (
             <div className="exchange-container">
                 <h2>Exchanges</h2>
                 {this.state.myExchanges.length === 0
-                    ? this.renderSpinner()
+                    ? ''
                     : this.renderExchanges()
                 }
             </div>

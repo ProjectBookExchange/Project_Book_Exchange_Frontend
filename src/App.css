@@ -39,6 +39,8 @@
   }
 }
 
+/* NAVBAR */
+
 .nav-bar-styles{
   background-color: #6CAE75;
 }
@@ -56,6 +58,7 @@
   margin-right: 7px;
 }
 
+/* SIGNUP and LOGIN */
 .form-sign-log-in {
   width: 100%;
   max-width: 330px;
@@ -69,36 +72,8 @@
   margin-top: 20px
 }
 
-.all-books-list{
-  border: 1px solid black
-}
-
-.all-books-list img{
-  width: 100px
-}
-
-.my-books-list{
-  border: 1px solid black;
-}
-
-.my-books-list img{
-  width: 100px
-}
-
-.card-container{
-  margin-bottom: 20px
-}
-
-.card-body{
-  padding: 0rem;
-}
-
-.public-profile{
-  margin-top: 100px
-}
-
-.exchange-container img{
- width: 100px
+.errMessage{
+  color: red
 }
 
 .btn {
@@ -107,7 +82,12 @@
   color: white
 }
 
+.card-container{
+  margin-bottom: 20px
+}
+
 .card-body{
+  padding: 0rem;
   margin-top: 10px
 }
 
@@ -128,11 +108,8 @@
   width: 20px;
 }
 
-.search-bar{
-  width: 80%;
-  margin: auto
-}
-
 .btn-delete{
   background-color: #FDB49E;
 }
+
+

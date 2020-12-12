@@ -1,6 +1,17 @@
 import React from 'react'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import '../styles/publicProfile.css';
+
 import UserService from '../services/UserService'
 import ExchangeService from '../services/ExchangeService'
+
+
+// import $ from 'jquery';
+// import Popper from 'popper.js';
+
+
 
 // import { Link, Redirect } from 'react-router-dom';
 

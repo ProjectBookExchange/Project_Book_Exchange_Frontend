@@ -40,7 +40,9 @@ const SignUp = (props)=>{
           onChange={(event)=>props.changeHandlerSignUp(event.target)}
           required
         />
-<p>{props.errMessage} </p>
+
+        <p class="errMessage">{props.errMessage} </p>
+        
         <button class="w-100 btn btn-lg" type="submit">Sign up</button>
 
       </form>

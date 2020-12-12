@@ -31,7 +31,7 @@ const LogIn = (props)=>{
           onChange={(event)=>props.changeHandlerLogIn(event.target)}
         />
 
-<p>{props.errMessage} </p>
+<p class="errMessage">{props.errMessage} </p>
         <button class="w-100 btn btn-lg" type="submit">Log In</button>
 
         <p class="mt-5 mb-3 text-muted"><i>Para viajar lejos, no hay mejor nave que un libro – Emily Dickinson</i></p>

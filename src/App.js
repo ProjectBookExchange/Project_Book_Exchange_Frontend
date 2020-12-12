@@ -23,7 +23,8 @@ class App extends React.Component {
 		isLogged: {},
 		newUser: { username: '', password: '', city: '' },
 		loggingUser: { username: '', password: '' },
-		errMessage: ''
+		errMessageSignup: '',
+		errMessageLogin: ''
 	}
 
 	service = new UserService();
@@ -33,7 +34,7 @@ class App extends React.Component {
 		event.preventDefault();
 		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city)
 			.then((result) => {
-				this.setState({errMessage: result.message})
+				this.setState({errMessageSignup: result.message})
 			})
 			.catch((err) => {
 				console.log(err);
@@ -50,9 +51,10 @@ class App extends React.Component {
 		this.service
 			.login(this.state.loggingUser.username, this.state.loggingUser.password)
 			.then((result) => {
-				this.setState({errMessage: result.message})
+				this.setState({errMessageLogin: result.message})
 				this.checkIfLoggedIn()
 			})
+
 			.catch((err) => {
 				console.log('Sorry something went wrong on submit.', err);
 			});
@@ -131,7 +133,7 @@ class App extends React.Component {
 						!this.state.isLogged.username
 						?<SignUp 
 							submitSignUp={this.submitSignUp}
-							errMessage={this.state.errMessage} 
+							errMessage={this.state.errMessageSignup} 
 							newUser={this.state.newUser} 
 							changeHandlerSignUp={this.changeHandlerSignUp} />
 						: <Redirect to='/login' />
@@ -146,7 +148,7 @@ class App extends React.Component {
 							submitLogIn={this.submitLogIn}
 							loggingUser={this.state.loggingUser}
 							changeHandlerLogIn={this.changeHandlerLogIn}
-							errMessage={this.state.errMessage} 
+							errMessage={this.state.errMessageLogin} 
 						/>
 						: <Redirect to='/profile'/>
 					)}

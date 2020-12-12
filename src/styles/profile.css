@@ -1,0 +1,10 @@
+
+.form-create-book{
+    background-color: rgba(253, 180, 158, 0.5);
+    padding: 20px
+}
+
+.form-create-book input{
+    width: 50%;
+    
+}
