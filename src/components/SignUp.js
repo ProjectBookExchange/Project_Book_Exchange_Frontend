@@ -44,6 +44,7 @@ const SignUp = (props)=>{
         <button class="w-100 btn btn-lg" type="submit">Sign up</button>
 
       </form>
+      <p>{props.errMessage} </p>
     </div>
   )
 }

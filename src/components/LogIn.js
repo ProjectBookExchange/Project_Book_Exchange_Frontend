@@ -36,7 +36,7 @@ const LogIn = (props)=>{
         <p class="mt-5 mb-3 text-muted"><i>Para viajar lejos, no hay mejor nave que un libro – Emily Dickinson</i></p>
         <img src="./images/bookGif.gif" alt="bookGif" width="100%"/>
       </form>
-
+      {/* <p>{props.errMessage} </p> */}
     </div>
   )
 }
