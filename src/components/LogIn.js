@@ -31,12 +31,13 @@ const LogIn = (props)=>{
           onChange={(event)=>props.changeHandlerLogIn(event.target)}
         />
 
+<p>{props.errMessage} </p>
         <button class="w-100 btn btn-lg" type="submit">Log In</button>
 
         <p class="mt-5 mb-3 text-muted"><i>Para viajar lejos, no hay mejor nave que un libro – Emily Dickinson</i></p>
         <img src="./images/bookGif.gif" alt="bookGif" width="100%"/>
       </form>
-      {/* <p>{props.errMessage} </p> */}
+      
     </div>
   )
 }

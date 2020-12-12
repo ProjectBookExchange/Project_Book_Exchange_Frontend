@@ -50,7 +50,7 @@ class App extends React.Component {
 		this.service
 			.login(this.state.loggingUser.username, this.state.loggingUser.password)
 			.then((result) => {
-				// this.setState({errMessage: result.message})
+				this.setState({errMessage: result.message})
 				this.checkIfLoggedIn()
 			})
 			.catch((err) => {
