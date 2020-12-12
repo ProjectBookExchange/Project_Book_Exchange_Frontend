@@ -64,6 +64,11 @@ class BookService {
         .catch(this.errorHandler);
     }
 
+  deleteMyBook (book) {
+    return this.service.post("/removeMyBook", {book})
+    .then(response => response.data)
+  }
+
 }
 
 export default BookService;

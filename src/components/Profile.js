@@ -48,7 +48,8 @@ class Profile extends React.Component {
         e.preventDefault();
         this.service.saveNewThing(this.state.newBook)
             .then(res => {
-                console.log('added: ', res);
+                // console.log('added: ', res);
+                this.rerender()
                 // here you would redirect to some other page 
             })
             .catch(err => {
@@ -57,6 +58,18 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
+        this.service.getMyBooks(this.props.isLogged._id)
+            .then((result) => {
+                return result.myBooks
+            })
+            .then((myBooks) => {
+                this.setState({ books: myBooks })
+                this.getMyWishes()
+            })
+            .catch((err) => console.log(err))
+    }
+
+    rerender() {
         this.service.getMyBooks(this.props.isLogged._id)
             .then((result) => {
                 return result.myBooks
@@ -79,6 +92,14 @@ class Profile extends React.Component {
             .catch((err) => console.log(err))
     }
 
+    removeMyBook(book){
+        this.service.deleteMyBook(book)
+        .then(()=>{
+            this.rerender()
+        })
+        .catch((err)=> console.log(err))
+    }
+
     renderMyBooks() {
         return this.state.books.map((book, index) => {
             if (book.borrowedUser === ''){
@@ -89,6 +110,7 @@ class Profile extends React.Component {
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
                             <p class="card-text">{book.author}</p>
+                            <button onClick={()=>this.removeMyBook(book)} class="btn btn-delete">Remove</button>
                             <div class="card-footer">
                                 <small class="text-muted">Interested:</small><br/>
                                 {book.interestedUsers.map((user, index) => {
@@ -121,6 +143,7 @@ class Profile extends React.Component {
                         <div class="card-body">
                             <h5 class="card-title">{book.title}</h5>
                             <p class="card-text">{book.author}</p>
+                            <button class="btn btn-delete">Remove</button>
                             <div class="card-footer">
                                 <small class="text-muted">User: 
                                 <Link to={`/publicProfile/${book.owner}`}>
