@@ -18,12 +18,6 @@ class Home extends React.Component {
 
   service = new BookService()
 
-  // imageBack = './images/backgroundImage.png' 
-
-  // divStyle = {
-  //   backgroundImage: 'url('+ this.imageBack + ')'
-  // }
-
   componentDidMount() {
 
     this.service.getAllBooks()
@@ -38,7 +32,7 @@ class Home extends React.Component {
 
   renderSpinner = () => {
     return (
-      <div class="spinner-border" role="status">
+      <div className="spinnerDiv" class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     )
@@ -50,6 +44,7 @@ class Home extends React.Component {
     this.service.addWish(book, userID, userName)
       .then((result) => {
         result.message && this.setState({ message: result.message })
+        console.log(result)
       })
       .catch((err) => console.log(err))
   }
@@ -77,16 +72,19 @@ class Home extends React.Component {
     return this.state.books.map((book, index) => {
       if (book.borrowedUser === '') {
         return (
-          <div class="col card-container" key={index}>
-            <div class="card h-100">
-              <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+          <div className="card-container" class="col" key={index}>
+            <div class="card">
+              <img src={book.imageUrl} class="card-img-top" alt={book.title}/>
               <div class="card-body">
                 <h6 class="card-title">{book.title}</h6>
                 <p class="card-text">{book.author}</p>
 
                 <p class="errMessageWish">{this.state.message}</p>
 
-                <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
+                {this.props.isLogged.username
+                  ? <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
+                  : <Link to="/login" type="button" class="btn">I wish</Link>
+                }
 
                 <div class="card-footer">
 
@@ -107,7 +105,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div class="home-page">
+      <div className="home-page">
 
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
@@ -142,9 +140,9 @@ class Home extends React.Component {
         {this.state.books.length === 0
           ? this.renderSpinner()
           :
-          <div class="container">
+          <div className="renderBooks" class="container">
             {/* <div class="row row-cols-2 row-cols-md-4 g-4"> */}
-            <div class="row row-cols-2 row-cols-md-4 g-4">
+            <div class="row row-cols-2 row-cols-md-5 g-4">
 
               {this.renderAllBooks()}
             </div>

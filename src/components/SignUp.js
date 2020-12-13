@@ -32,6 +32,16 @@ const SignUp = (props)=>{
         />
 
         <input 
+          type="text" 
+          name="contact"
+          class="form-control"  
+          value={props.newUser.contact}
+          placeholder="Contact (e.g. phone number, email)" 
+          onChange={(event)=>props.changeHandlerSignUp(event.target)}
+          required
+        />
+
+        <input 
           type="password"
           class="form-control" 
           name="password" 

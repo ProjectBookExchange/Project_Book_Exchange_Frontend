@@ -14,8 +14,8 @@ class UserService {
     this.service = service;
   }
 
-  signup = (username, password, city) => {
-    return this.service.post("/signup", {username, password, city})
+  signup = (username, password, city, contact) => {
+    return this.service.post("/signup", {username, password, city, contact})
     .then(response => response.data)
   }
 

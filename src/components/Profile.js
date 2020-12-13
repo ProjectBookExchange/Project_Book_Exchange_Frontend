@@ -21,7 +21,10 @@ class Profile extends React.Component {
             owner: this.props.isLogged._id,
             owner_name: this.props.isLogged.username,
             owner_city: this.props.isLogged.city
-        }
+        },
+        showForm: false,
+        showMyBooks: true,
+        showMyWishes: false
     }
 
     service = new BookService()
@@ -54,6 +57,7 @@ class Profile extends React.Component {
             .then(res => {
                 // console.log('added: ', res);
                 this.rerender()
+                this.setState({ showForm: false })
                 // here you would redirect to some other page 
             })
             .catch(err => {
@@ -117,7 +121,7 @@ class Profile extends React.Component {
             if (book.borrowedUser === '') {
                 return (
                     <div key={index} class="col card-container">
-                        <div class="card h-100">
+                        <div class="card">
                             <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                             <div class="card-body">
                                 <h5 class="card-title">{book.title}</h5>
@@ -177,104 +181,112 @@ class Profile extends React.Component {
         })
     }
 
+    showAddBook() {
+        this.state.showForm
+            ? this.setState({ showForm: false })
+            : this.setState({ showForm: true })
+    }
+
+    showMyBooks(){
+        this.setState({showMyBooks: true, showMyWishes: false})
+    }
+
+    showMyWishes(){
+        this.setState({showMyBooks: false, showMyWishes: true})
+    }
+
+
 
     render() {
         return (
             <div>
-                <div class="container text-left">
-                    <h3>Welcome, {this.props.isLogged.username}</h3>
-                <p>{this.props.isLogged.city}</p>
+                <div class="container text-left profile-data">
+                    <h3 class="text-center">Welcome, {this.props.isLogged.username}</h3>
+                    <p>City: {this.props.isLogged.city}</p>
+                    <p>Contact: {this.props.isLogged.contact}</p>
+                    <button class="btn" type="button" onClick={() => this.showAddBook()}> Add new Book</button>
                 </div>
 
-                <form onSubmit={e => this.handleSubmit(e)} class="container form-create-book">
+                {this.state.showForm &&
 
-                    <div class="row align-items-center">
+                    <form onSubmit={e => this.handleSubmit(e)} class="container form-create-book">
 
-                        <div class="col-3">
-                            <h5>New book</h5>
+                        <div class="row align-items-center">
+
+                            <div class="col-3">
+                                <h5>New book</h5>
+                            </div>
+
+                            <div class="col-7 text-left">
+                                <label htmlFor="title">Title: </label>
+                                <input type="text" name="title" onChange={e => this.handleChange(e)}
+                                /><br />
+
+                                <label htmlFor="author">Author: </label>
+                                <input type="text" name="author" onChange={e => this.handleChange(e)}
+                                /><br />
+
+                                <label htmlFor="imageUrl">Adjuntar imagen: </label>
+                                <input type="file" onChange={e => this.handleFileUpload(e)}
+                                />
+                            </div>
+
+                            <div class="col-2">
+
+                                {this.state.newBook.imageUrl
+
+                                    ? <button class="btn btn-light" type="submit">Añadir libro</button>
+                                    : <button class="btn btn-light" type="submit" disabled>Añadir libro</button>
+
+                                }
+                                {/* <button class="btn btn-outline-success" type="submit">Añadir libro</button> */}
+                            </div>
                         </div>
 
-                        <div class="col-7 text-left">
-                            <label htmlFor="title">Title: </label>
-                            <input type="text" name="title" onChange={e => this.handleChange(e)}
-                            /><br/>
 
-                            <label htmlFor="author">Author: </label>
-                            <input type="text" name="author" onChange={e => this.handleChange(e)}
-                            /><br/>
+                    </form>
 
-                            <label htmlFor="imageUrl">Adjuntar imagen: </label>
-                            <input type="file" onChange={e => this.handleFileUpload(e)}
-                            />
-                        </div>
-
-                        <div class="col-2">
-                            <button class="btn btn-outline-success" type="submit">Añadir libro</button>
-                        </div>
-                    </div>
-
-
-                </form>
-
-
-
-                {/* <form onSubmit={e => this.handleSubmit(e)}>
-
-                    <label htmlFor="title">Title: </label>
-                    <input
-                        type="text"
-                        name="title"
-                        onChange={e => this.handleChange(e)}
-                    />
-                    <br />
-
-                    <label htmlFor="author">Author: </label>
-                    <input
-                        type="text"
-                        name="author"
-                        onChange={e => this.handleChange(e)}
-                    />
-                    <br />
-
-                    <label htmlFor="imageUrl">Adjuntar imagen: </label>
-                    <input
-                        type="file"
-                        onChange={e => this.handleFileUpload(e)}
-                    />
-
-
-                    <button type="submit">Añadir libro</button>
-
-                </form> */}
-
+                }
 
                 <br />
 
-                <div>
-                    <h3>Mis libros</h3>
-                    {this.state.books.length === 0
-                        ? ''
-                        :
-                        <div class="container">
-                            <div class="row row-cols-2 row-cols-md-3 g-4">
-                                {this.renderMyBooks()}
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <button onClick={() => this.showMyBooks()} class="nav-link" aria-current="page">My Books</button>
+                    </li>
+                    <li class="nav-item">
+                        <button onClick={() => this.showMyWishes()} class="nav-link">My wishes</button>
+                    </li>
+                </ul>
+                <br />
+                {this.state.showMyBooks &&
+                    <div>
+                        {this.state.books.length === 0
+                            ? ''
+                            :
+                            <div class="container">
+                                <div class="row row-cols-2 row-cols-md-5 g-4">
+                                    {this.renderMyBooks()}
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                }
 
-                <div>
-                    <h3>My wishes</h3>
-                    {this.state.myWishes.length === 0
-                        ? ''
-                        :
-                        <div class="container">
-                            <div class="row row-cols-2 row-cols-md-3 g-4">
-                                {this.renderMyWishes()}
+                {this.state.showMyWishes &&
+                    <div>
+                        {this.state.myWishes.length === 0
+                            ? ''
+                            :
+                            <div class="container">
+                                <div class="row row-cols-2 row-cols-md-5 g-4">
+                                    {this.renderMyWishes()}
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                }
+
             </div>
         )
     }

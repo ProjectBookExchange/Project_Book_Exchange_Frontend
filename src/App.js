@@ -21,7 +21,7 @@ class App extends React.Component {
 
 	state = {
 		isLogged: {},
-		newUser: { username: '', password: '', city: '' },
+		newUser: { username: '', password: '', city: '', contact: ''},
 		loggingUser: { username: '', password: '' },
 		errMessageSignup: '',
 		errMessageLogin: ''
@@ -32,7 +32,7 @@ class App extends React.Component {
 	//SIGNUP CONFIG
 	submitSignUp = (event) => {
 		event.preventDefault();
-		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city)
+		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city, this.state.newUser.contact)
 			.then((result) => {
 				this.setState({errMessageSignup: result.message})
 			})

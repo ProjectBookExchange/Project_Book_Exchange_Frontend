@@ -1,4 +1,14 @@
 
+.profile-data{
+    background-color: rgba(223, 226, 220, 0.8);
+    padding: 15px 20px 30px;
+    border-radius: 20px
+}
+
+.profile-data button{
+    background-color: #ACCA91
+}
+
 .form-create-book{
     background-color: rgba(253, 180, 158, 0.5);
     padding: 20px
