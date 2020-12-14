@@ -6,24 +6,23 @@ import '../styles/publicProfile.css';
 
 import UserService from '../services/UserService'
 import ExchangeService from '../services/ExchangeService'
+import BookService from '../services/BookService'
 
 
 // import $ from 'jquery';
 // import Popper from 'popper.js';
 
 
-
-// import { Link, Redirect } from 'react-router-dom';
-
-
 class PublicProfile extends React.Component {
 
     state = {
-        userProfile: []
+        userProfile: [],
+        message: []
     }
 
     service = new UserService()
     serviceExchange = new ExchangeService()
+    serviceBook = new BookService()
 
     componentDidMount() {
         this.service.viewPublicProfile(this.props.match.params.id)
@@ -39,10 +38,31 @@ class PublicProfile extends React.Component {
     moveBorrowed = (book, profile) => {
         this.serviceExchange.moveBorrowedBooks(book, profile)
         .then((result)=>{
-            console.log(result)
-        //    <Redirect to="/exchanges"/>
+            console.log (result)
+            this.rerender()
         })
         .catch((err)=>console.log(err))
+    }
+
+    addToMyWishes = (book) => {
+        const userID = this.props.isLogged._id
+        const userName = this.props.isLogged.username
+        this.serviceBook.addWish(book, userID, userName)
+          .then((result) => {
+            this.setState({ message: result })
+          })
+          .catch((err) => console.log(err))
+      }
+
+    rerender() {
+        this.service.viewPublicProfile(this.props.match.params.id)
+        .then((result) => {
+            return result
+        })
+        .then((userData) => {
+            this.setState({ userProfile: userData })
+        })
+        .catch((err) => console.log(err))
     }
 
     renderPublicProfile = () => {
@@ -67,6 +87,18 @@ class PublicProfile extends React.Component {
                                         <div class="card-body">
                                             <h5 class="card-title">{book.title}</h5>
                                             <p class="card-text">{book.author}</p>
+
+                                            {(this.state.message === book._id) &&
+              <p class="errMessageWish">it's already on your list!</p>  
+              }
+
+{(this.state.message._id === book._id) &&
+              <p class="messageAddedWish">Added to your list</p>  
+              }
+
+
+                                            <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
+
                                         </div>
                                     </div>
                                 </div>

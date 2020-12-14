@@ -13,7 +13,7 @@ class Home extends React.Component {
   state = {
     books: [],
     searchedBooks: [],
-    message: '',
+    message: [],
   }
 
   service = new BookService()
@@ -43,8 +43,9 @@ class Home extends React.Component {
     const userName = this.props.isLogged.username
     this.service.addWish(book, userID, userName)
       .then((result) => {
-        result.message && this.setState({ message: result.message })
         console.log(result)
+        this.setState({ message: result })
+       
       })
       .catch((err) => console.log(err))
   }
@@ -79,7 +80,15 @@ class Home extends React.Component {
                 <h6 class="card-title">{book.title}</h6>
                 <p class="card-text">{book.author}</p>
 
-                <p class="errMessageWish">{this.state.message}</p>
+              {(this.state.message === book._id) &&
+              <p class="errMessageWish">it's already on your list!</p>  
+              }
+
+{(this.state.message._id === book._id) &&
+              <p class="messageAddedWish">Added to your list</p>  
+              }
+
+                {/* <p class="errMessageWish">{this.state.message}</p> */}
 
                 {this.props.isLogged.username
                   ? <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>

@@ -27,11 +27,31 @@ class Exchanges extends React.Component {
             })
     }
 
+    rerender = () => {
+        this.service.viewExchanges(this.props.isLogged._id)
+            .then((result) => {
+                return result.myExchanges
+            })
+            .then((exchanges) => {
+                this.setState({ myExchanges: exchanges })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    removeExchange(exchange) {
+        this.service.deleteExchange(exchange)
+            .then(() => {
+                this.rerender()
+            })
+            .catch((err) => console.log(err))
+    }
+
     renderExchanges() {
         return this.state.myExchanges.map((exchange, index) => {
             return (
                 <div key={index}>
-                    
                     
                     {exchange.borrowed.map((borrowed, index) => {
                         return (
@@ -40,6 +60,7 @@ class Exchanges extends React.Component {
                                 <p>{exchange.userPartner}</p>
                                 <p>{borrowed.title}</p>
                                 <img src={borrowed.imageUrl} alt={borrowed.title} />
+                                <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
                             </div>
                         )
                     })}
@@ -50,6 +71,7 @@ class Exchanges extends React.Component {
                                 <p>{exchange.userPartner}</p>
                                 <p>{acquired.title}</p>
                                 <img src={acquired.imageUrl} alt={acquired.title} />
+                                <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
                             </div>
                         )
                     })}

@@ -16,7 +16,13 @@
   }
 
 .errMessageWish{
-    font-size: 0.7rem
+    font-size: 0.7rem;
+    color: red
   }
+
+.messageAddedWish{
+  font-size: 0.7rem;
+  color: green
+}
 
   

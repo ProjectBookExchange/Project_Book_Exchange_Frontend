@@ -23,6 +23,11 @@ class ExchangeService {
       .then(response => response.data)
     }
 
+    deleteExchange = (exchange) => {
+      return this.service.post("/removeExchange", {exchange})
+      .then(response => response.data)
+    }
+
 }
 
 export default ExchangeService;

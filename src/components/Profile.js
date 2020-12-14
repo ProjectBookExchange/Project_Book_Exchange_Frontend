@@ -187,14 +187,13 @@ class Profile extends React.Component {
             : this.setState({ showForm: true })
     }
 
-    showMyBooks(){
-        this.setState({showMyBooks: true, showMyWishes: false})
+    showMyBooks() {
+        this.setState({ showMyBooks: true, showMyWishes: false })
     }
 
-    showMyWishes(){
-        this.setState({showMyBooks: false, showMyWishes: true})
+    showMyWishes() {
+        this.setState({ showMyBooks: false, showMyWishes: true })
     }
-
 
 
     render() {
@@ -239,11 +238,8 @@ class Profile extends React.Component {
                                     : <button class="btn btn-light" type="submit" disabled>Añadir libro</button>
 
                                 }
-                                {/* <button class="btn btn-outline-success" type="submit">Añadir libro</button> */}
                             </div>
                         </div>
-
-
                     </form>
 
                 }
