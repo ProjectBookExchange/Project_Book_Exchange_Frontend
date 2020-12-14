@@ -6,7 +6,7 @@ class BookService {
 
   constructor() {
     let service = axios.create({
-      baseURL: "http://localhost:3001",
+      baseURL: "https://project-book-exchange.herokuapp.com/",
       withCredentials: true
     });
 
