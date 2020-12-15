@@ -43,7 +43,6 @@ class Home extends React.Component {
     const userName = this.props.isLogged.username
     this.service.addWish(book, userID, userName)
       .then((result) => {
-        console.log(result)
         this.setState({ message: result })
 
       })

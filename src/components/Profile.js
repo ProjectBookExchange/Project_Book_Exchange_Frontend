@@ -13,6 +13,12 @@ import { Link } from 'react-router-dom';
 class Profile extends React.Component {
 
     state = {
+        userData: {
+            name: '',
+            city: '',
+            contact: ''
+        },
+        temporalUserData: {city: '', contact: ''},
         books: [],
         myWishes: [],
         newBook: {
@@ -56,7 +62,7 @@ class Profile extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.service.saveNewThing(this.state.newBook)
-            .then(res => {
+            .then(() => {
                 // console.log('added: ', res);
                 this.rerender()
                 this.setState({ showForm: false })
@@ -74,6 +80,7 @@ class Profile extends React.Component {
             })
             .then((myBooks) => {
                 this.setState({ books: myBooks })
+                this.setState({userData: {...this.state.userData, name: this.props.isLogged.username, city: this.props.isLogged.city, contact: this.props.isLogged.contact}})
                 this.getMyWishes()
             })
             .catch((err) => console.log(err))
@@ -87,6 +94,7 @@ class Profile extends React.Component {
             .then((myBooks) => {
                 this.setState({ books: myBooks })
                 this.getMyWishes()
+                this.setState({ newBook: { ...this.state.newBook, imageUrl: '' } })
             })
             .catch((err) => console.log(err))
     }
@@ -199,21 +207,60 @@ class Profile extends React.Component {
         this.setState({ showMyBooks: false, showMyWishes: true })
     }
 
+    submitCityData = e => {
+        e.preventDefault();
+        this.serviceUser.editCity(this.state.temporalUserData, this.userID)
+            .then((newCity)=>{
+                this.setState({userData: { ...this.state.userData, city: newCity.city}})
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    handleChangeCity = e => {
+        const {name, value} = e.target;
+        this.setState({ temporalUserData: { ...this.state.temporalUserData, [name]: value } })
+    }
+
     render() {
         return (
             <div>
                 <div class="container text-left profile-data">
-                    <h2 class="text-left profile-name">Welcome, {this.props.isLogged.username}</h2>
-                    <hr/>
+                    <h2 class="text-left profile-name">Welcome, {this.state.userData.name}</h2>
+                    <hr />
                     <div class="row row-cols-1 row-cols-md-3 g-3">
-                    
+
                         <div class="col">
-                        <h5>Your user data</h5>
+                            <h5>Your user data</h5>
                             <div class="data-div">
-                            <p><b>City:</b> {this.props.isLogged.city}</p>
-                            <p><b>Contact:</b> {this.props.isLogged.contact}</p>
+                                <p><b>City:</b> {this.state.userData.city}</p>
+                                <p><b>Contact:</b> {this.state.userData.contact}</p>
                             </div>
-                            
+
+                            <form onSubmit={e => this.submitCityData(e)}> 
+                                <div class="column align-items-center">
+                                    <div class="col text-left">
+                                        <label htmlFor="city">City: </label>
+                                        <input type="text" name="city" placeholder={this.state.userData.city} onChange={e => this.handleChangeCity(e)} 
+                                        />
+                                        <button class="btn btn-light" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            {/* <form>
+                                <div class="column align-items-center">
+                                    <div class="col text-left">
+                                        <label htmlFor="contact">Contact: </label>
+                                        <input type="text" name="contact" value={this.props.isLogged.contact} 
+                                        />
+                                        <button class="btn btn-light" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form> */}
+
+
                         </div>
 
                         <div class="col">
@@ -236,7 +283,7 @@ class Profile extends React.Component {
                             </ul>
 
                         </div>
-  
+
                         <div class="col">
                             <button class="btn" type="button" onClick={() => this.showAddBook()}> Upload book</button>
                             {this.state.showForm &&

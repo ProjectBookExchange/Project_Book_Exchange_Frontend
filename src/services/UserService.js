@@ -36,6 +36,11 @@ class UserService {
     return this.service.post(`/publicProfile/${userID}`, {userID})
     .then(response => response.data)
   }
+
+  editCity = (editedCity, userID) => {
+    return this.service.post('/editCity', {editedCity, userID})
+      .then(res => res.data)
+  }
 }
 
 export default UserService;

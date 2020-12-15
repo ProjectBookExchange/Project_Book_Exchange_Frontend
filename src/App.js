@@ -84,6 +84,8 @@ class App extends React.Component {
 
 	}
 
+	//Render page:
+
 	componentDidMount() {
 		this.checkIfLoggedIn();
 	}

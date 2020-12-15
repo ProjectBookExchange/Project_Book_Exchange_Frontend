@@ -28,6 +28,11 @@ class ExchangeService {
       .then(response => response.data)
     }
 
+    searchExchange = (userPartner, title) => {
+      return this.service.post("/searchExchange", {userPartner, title})
+      .then(response => response.data)
+    }
+
 }
 
 export default ExchangeService;
