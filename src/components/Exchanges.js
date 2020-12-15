@@ -82,7 +82,7 @@ class Exchanges extends React.Component {
                                 {/* <h3 class="card-title">Acquired:</h3> */}
                                 <h3 class="card-title">{acquired.title}</h3>
 
-                                <p class="card-text">Owner{exchange.userPartner}</p>
+                                <p class="card-text">Owner: {exchange.userPartner}</p>
                             </div>
                             <div class="card-footer">
                                 <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>

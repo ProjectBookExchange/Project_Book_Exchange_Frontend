@@ -21,6 +21,14 @@
     background-color: #B28D51
 }
 
+.your-lists a{
+    color: #B28D51
+}
+
+.your-lists span{
+    background-color: #B28D51
+}
+
 .form-create-book{
     padding: 20px;
     border: 1px solid white;

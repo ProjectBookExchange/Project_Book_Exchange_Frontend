@@ -35,10 +35,20 @@ class PublicProfile extends React.Component {
             .catch((err) => console.log(err))
     }
 
+    rerender() {
+        this.service.viewPublicProfile(this.props.match.params.id)
+            .then((result) => {
+                return result
+            })
+            .then((userData) => {
+                this.setState({ userProfile: userData })
+            })
+            .catch((err) => console.log(err))
+    }
+
     moveBorrowed = (book, profile) => {
         this.serviceExchange.moveBorrowedBooks(book, profile)
-            .then((result) => {
-                console.log(result)
+            .then(() => {
                 this.rerender()
             })
             .catch((err) => console.log(err))
@@ -54,21 +64,8 @@ class PublicProfile extends React.Component {
             .catch((err) => console.log(err))
     }
 
-    rerender() {
-        this.service.viewPublicProfile(this.props.match.params.id)
-            .then((result) => {
-                return result
-            })
-            .then((userData) => {
-                this.setState({ userProfile: userData })
-            })
-            .catch((err) => console.log(err))
-    }
-
-    renderPublicProfile = () => {
+    renderPublicProfile () {
         return (
-
-
             <div className="user-profile">
                 <div class="container text-left userdata-containter">
 

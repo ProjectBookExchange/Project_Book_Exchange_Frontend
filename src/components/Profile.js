@@ -218,7 +218,7 @@ class Profile extends React.Component {
 
                         <div class="col">
                             <h5>Your lists</h5>
-                            <ul class="list-group">
+                            <ul class="list-group your-lists">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
 
                                     <Link onClick={() => this.showMyBooks()} class="nav-link active" aria-current="page">My Books</Link>

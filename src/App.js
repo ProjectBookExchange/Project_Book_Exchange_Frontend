@@ -21,7 +21,7 @@ class App extends React.Component {
 
 	state = {
 		isLogged: {},
-		newUser: { username: '', password: '', city: '', contact: ''},
+		newUser: { username: '', password: '', city: '', contact: '' },
 		loggingUser: { username: '', password: '' },
 		errMessageSignup: '',
 		errMessageLogin: ''
@@ -34,7 +34,8 @@ class App extends React.Component {
 		event.preventDefault();
 		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city, this.state.newUser.contact)
 			.then((result) => {
-				this.setState({errMessageSignup: result.message})
+				this.setState({ errMessageSignup: result.message })
+				this.checkIfLoggedIn()
 			})
 			.catch((err) => {
 				console.log(err);
@@ -51,7 +52,7 @@ class App extends React.Component {
 		this.service
 			.login(this.state.loggingUser.username, this.state.loggingUser.password)
 			.then((result) => {
-				this.setState({errMessageLogin: result.message})
+				this.setState({ errMessageLogin: result.message })
 				this.checkIfLoggedIn()
 			})
 
@@ -72,17 +73,15 @@ class App extends React.Component {
 	};
 
 	logOut = () => {
-		
+
 		this.service.logout()
-			.then((result) => {
-				console.log(result)
+			.then(() => {
 				this.checkIfLoggedIn()
-				return <Redirect to="/" />
 			})
 			.catch((err) => {
 				console.log(err)
 			})
-			
+
 	}
 
 	componentDidMount() {
@@ -136,54 +135,55 @@ class App extends React.Component {
 							errMessage={this.state.errMessageSignup} 
 							newUser={this.state.newUser} 
 							changeHandlerSignUp={this.changeHandlerSignUp} />
-						: <Redirect to='/login' />
+						: <Redirect to='/profile' />
 					)}
 				/>
-				
+
+
 				<Route
 					path="/login"
 					render={() => (
 						!this.state.isLogged.username
-						? <LogIn
-							submitLogIn={this.submitLogIn}
-							loggingUser={this.state.loggingUser}
-							changeHandlerLogIn={this.changeHandlerLogIn}
-							errMessage={this.state.errMessageLogin} 
-						/>
-						: <Redirect to='/profile'/>
+							? <LogIn
+								submitLogIn={this.submitLogIn}
+								loggingUser={this.state.loggingUser}
+								changeHandlerLogIn={this.changeHandlerLogIn}
+								errMessage={this.state.errMessageLogin}
+							/>
+							: <Redirect to='/profile' />
 					)}
 				/>
 
 				<Route
 					path="/profile"
 					render={() => (
-						this.state.isLogged.username 
-						? <Profile
-							isLogged={this.state.isLogged}
-						/>
-						: <Redirect to='/' />
+						this.state.isLogged.username
+							? <Profile
+								isLogged={this.state.isLogged}
+							/>
+							: <Redirect to='/' />
 					)}
 				/>
 
 				<Route
-                  path="/publicProfile/:id"
-                  render={(props) => {
-					  return(
-						this.state.isLogged.username 
-						  ? <PublicProfile {...props} isLogged={this.state.isLogged}/>
-						  : <Redirect to='/login' />
-					  )
-				  }}
-                />
+					path="/publicProfile/:id"
+					render={(props) => {
+						return (
+							this.state.isLogged.username
+								? <PublicProfile {...props} isLogged={this.state.isLogged} />
+								: <Redirect to='/login' />
+						)
+					}}
+				/>
 
 				<Route
 					path="/exchanges"
 					render={() => (
-						this.state.isLogged.username 
-						? <Exchanges
-							isLogged={this.state.isLogged}
-						/>
-						: <Redirect to='/' />
+						this.state.isLogged.username
+							? <Exchanges
+								isLogged={this.state.isLogged}
+							/>
+							: <Redirect to='/' />
 					)}
 				/>
 
