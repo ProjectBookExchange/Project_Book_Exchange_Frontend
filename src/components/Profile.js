@@ -1,6 +1,7 @@
 import React from 'react'
 import BookService from '../services/BookService'
 import ExchangeService from '../services/ExchangeService';
+import UserService from '../services/UserService';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -29,6 +30,7 @@ class Profile extends React.Component {
 
     service = new BookService()
     serviceExchange = new ExchangeService()
+    serviceUser = new UserService()
 
     userID = this.props.isLogged._id
 
@@ -195,15 +197,44 @@ class Profile extends React.Component {
         this.setState({ showMyBooks: false, showMyWishes: true })
     }
 
-
     render() {
         return (
             <div>
                 <div class="container text-left profile-data">
-                    <h3 class="text-center">Welcome, {this.props.isLogged.username}</h3>
-                    <p>City: {this.props.isLogged.city}</p>
-                    <p>Contact: {this.props.isLogged.contact}</p>
-                    <button class="btn" type="button" onClick={() => this.showAddBook()}> Add new Book</button>
+                    <h3 class="text-left">{this.props.isLogged.username}</h3>
+                    <div class="row justify-content-around">
+                        <div class="col">
+
+                            <p>City: {this.props.isLogged.city}</p>
+                            <p>Contact: {this.props.isLogged.contact}</p>
+                        </div>
+
+                        <div class="col">
+                            <p>Your lists</p>
+
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                    <Link onClick={() => this.showMyBooks()} class="nav-link active" aria-current="page">My Books</Link>
+
+                                    <span class="badge badge-primary badge-pill">{this.state.books.length}</span>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                    <Link onClick={() => this.showMyWishes()} class="nav-link">My wishes</Link>
+
+                                    <span class="badge badge-primary badge-pill">{this.state.myWishes.length}</span>
+
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="col">
+                            <button class="btn" type="button" onClick={() => this.showAddBook()}> Add new Book</button>
+                        </div>
+                    </div>
                 </div>
 
                 {this.state.showForm &&
@@ -244,17 +275,18 @@ class Profile extends React.Component {
 
                 }
 
-                <br />
+                {/* <br />
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <button onClick={() => this.showMyBooks()} class="nav-link" aria-current="page">My Books</button>
+                        <button onClick={() => this.showMyBooks()} class="nav-link active" aria-current="page">My Books</button>
                     </li>
                     <li class="nav-item">
                         <button onClick={() => this.showMyWishes()} class="nav-link">My wishes</button>
                     </li>
                 </ul>
-                <br />
+                <br /> */}
+
                 {this.state.showMyBooks &&
                     <div>
                         {this.state.books.length === 0

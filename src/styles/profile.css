@@ -1,6 +1,7 @@
 
 .profile-data{
-    background-color: rgba(223, 226, 220, 0.8);
+    background-color:white;
+    border: 1px solid #B28D51;
     padding: 15px 20px 30px;
     border-radius: 20px
 }
@@ -16,5 +17,8 @@
 
 .form-create-book input{
     width: 50%;
-    
+}
+
+.form-create-book label{
+    color: #B28D51;
 }

@@ -21,6 +21,7 @@ class Exchanges extends React.Component {
             })
             .then((exchanges) => {
                 this.setState({ myExchanges: exchanges })
+                console.log(this.state.myExchanges)
             })
             .catch((err) => {
                 console.log(err)
@@ -48,45 +49,73 @@ class Exchanges extends React.Component {
             .catch((err) => console.log(err))
     }
 
-    renderExchanges() {
+    renderBorrowed() {
         return this.state.myExchanges.map((exchange, index) => {
-            return (
-                <div key={index}>
-                    
-                    {exchange.borrowed.map((borrowed, index) => {
-                        return (
-                            <div key={index}>
-                                <h3>Borrowed:</h3>
-                                <p>{exchange.userPartner}</p>
-                                <p>{borrowed.title}</p>
-                                <img src={borrowed.imageUrl} alt={borrowed.title} />
+            return exchange.borrowed.map((borrowed, index) => {
+                return (
+                    <div key={index} class="col card-container">
+                            <div class="card">
+                            <img src={borrowed.imageUrl} alt={borrowed.title} class="card-img-top" />
+                            <div class="card-body">
+                                <h3 class="card-title">Borrowed:</h3>
+                                <p class="card-text">{borrowed.title}</p>
+
+                                <p class="card-text">{exchange.userPartner}</p>
+                            </div>
+                            <div class="card-footer">
                                 <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
                             </div>
-                        )
-                    })}
-                    {exchange.acquired.map((acquired, index) => {
-                        return (
-                            <div key={index}>
-                                <h3>Acquired:</h3>
-                                <p>{exchange.userPartner}</p>
-                                <p>{acquired.title}</p>
-                                <img src={acquired.imageUrl} alt={acquired.title} />
+                        </div>
+                    </div>
+                )
+            })
+        })
+    }
+
+    renderAcquired() {
+        return this.state.myExchanges.map((exchange, index) => {
+            return exchange.acquired.map((acquired, index) => {
+                return (
+                    <div key={index} class="col card-container">
+                        <div class="card">
+                            <img src={acquired.imageUrl} alt={acquired.title} class="card-img-top" />
+                            <div class="card-body">
+                                <h3 class="card-title">Acquired:</h3>
+                                <p class="card-text">{acquired.title}</p>
+
+                                <p class="card-text">{exchange.userPartner}</p>
+                            </div>
+                            <div class="card-footer">
                                 <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
                             </div>
-                        )
-                    })}
-                </div>
-            )
+                        </div>
+                    </div>
+                )
+            })
         })
     }
 
     render() {
         return (
             <div className="exchange-container">
-                <h2>Exchanges</h2>
                 {this.state.myExchanges.length === 0
                     ? ''
-                    : this.renderExchanges()
+                    :
+                    <div>
+                        <div class="container type-exchange-container">
+                            <h4 class="type-exchange">Borrowed</h4>
+                            <div class="row row-cols-2 row-cols-md-5 g-4">
+
+                                {this.renderBorrowed()}
+                            </div></div>
+
+                        <div class="container type-exchange-container">
+                            <h4 class="type-exchange">Acquired</h4>
+                            <div class="row row-cols-2 row-cols-md-5 g-4">
+
+                                {this.renderAcquired()}
+                            </div></div>
+                    </div>
                 }
             </div>
         )

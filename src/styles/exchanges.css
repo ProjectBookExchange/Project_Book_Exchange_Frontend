@@ -1,3 +1,10 @@
-.exchange-container img{
-    width: 100px
-   }
+
+.type-exchange{
+    background-color: #6CAE75;
+    color: white
+}
+
+.type-exchange-container{
+    background-color: white;
+    margin-bottom: 15px
+}

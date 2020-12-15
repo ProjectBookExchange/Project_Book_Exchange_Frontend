@@ -45,7 +45,7 @@ class Home extends React.Component {
       .then((result) => {
         console.log(result)
         this.setState({ message: result })
-       
+
       })
       .catch((err) => console.log(err))
   }
@@ -75,25 +75,35 @@ class Home extends React.Component {
         return (
           <div className="card-container" class="col" key={index}>
             <div class="card">
-              <img src={book.imageUrl} class="card-img-top" alt={book.title}/>
+              <img src={book.imageUrl} class="card-img-top" alt={book.title} />
+              <div>
+                  {(this.state.message === book._id) &&
+                    <p class="errMessageWish">it's already on your list!</p>
+                  }
+
+                  {(this.state.message._id === book._id) &&
+                    <p class="messageAddedWish">Added to your list</p>
+                  }
+                </div>
               <div class="card-body">
+                
+                <div class="card-text text-right">
+
+                  {this.props.isLogged.username
+
+                    ? <Link class="button-noBack" data-toggle="tooltip" data-placement="top" data-html="true" title="Add to my wish list" onClick={() => this.addToMyWishes(book)}>
+                      <div class="heart"></div>
+                    </Link>
+
+                    : <Link to="/login" class="button-noBack" data-toggle="tooltip" data-placement="top" data-html="true" title="Log in to added">
+                      <div class="heart"></div>
+                    </Link>
+                  }
+                </div>
+
                 <h6 class="card-title">{book.title}</h6>
+
                 <p class="card-text">{book.author}</p>
-
-              {(this.state.message === book._id) &&
-              <p class="errMessageWish">it's already on your list!</p>  
-              }
-
-{(this.state.message._id === book._id) &&
-              <p class="messageAddedWish">Added to your list</p>  
-              }
-
-                {/* <p class="errMessageWish">{this.state.message}</p> */}
-
-                {this.props.isLogged.username
-                  ? <button class="btn" type="button" onClick={() => this.addToMyWishes(book)}>I wish</button>
-                  : <Link to="/login" type="button" class="btn">I wish</Link>
-                }
 
                 <div class="card-footer">
 
@@ -116,34 +126,32 @@ class Home extends React.Component {
     return (
       <div className="home-page">
 
-        <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 class="display-5">BookExchange</h1>
-            <p>No compras ni vendas, intercambia libros con otros usuarios amantes de la lectura</p>
+        {/* <div class="jumbotron jumbotron-fluid"> */}
+        <div class="container">
+          {/* <h1 class="display-5">BookExchange</h1> */}
+          {/* <p>Intercambia tus libros con otros usuarios</p> */}
 
-            <form class="container search-bar text-left" onSubmit={this.searchBook}>
-              <div class="row align-items-center">
-                <div class="col-sm-4 col-md-5">
-                  <label htmlFor="city">City:</label>
-                  <input class="form-control me-2" type="search" placeholder="e.g. Barcelona" name="owner_city" onChange={(event) => this.changeInputsSearch(event.target)} />
-                </div>
-
-                <div class="col-sm-4 col-md-5">
-                  <label htmlFor="title">Title:</label>
-                  <input class="form-control me-2" type="search" placeholder="e.g. El Hobbit" name="title" onChange={(event) => this.changeInputsSearch(event.target)} />
-                </div>
-
-                <div class="col-sm-4 col-md-2 align-self-end">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </div>
+          <form class="container search-bar text-left" onSubmit={this.searchBook}>
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-md-5">
+                <label htmlFor="city">City:</label>
+                <input class="form-control me-2" type="search" placeholder="e.g. Barcelona" name="owner_city" onChange={(event) => this.changeInputsSearch(event.target)} />
               </div>
 
-            </form>
-          </div>
+              <div class="col-sm-4 col-md-5">
+                <label htmlFor="title">Title:</label>
+                <input class="form-control me-2" type="search" placeholder="e.g. El Hobbit" name="title" onChange={(event) => this.changeInputsSearch(event.target)} />
+              </div>
+
+              <div class="col-sm-4 col-md-2 align-self-end">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </div>
+            </div>
+
+          </form>
         </div>
+        {/* </div> */}
 
-
-        <br />
         <br />
 
         {this.state.books.length === 0

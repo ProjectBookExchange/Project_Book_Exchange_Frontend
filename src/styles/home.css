@@ -1,13 +1,17 @@
 
-.jumbotron{
+/* .jumbotron{
+  background-color: rgba(128, 101, 64, 0.6);
   padding: 20px;
   margin: 0px
-}
+} */
 
 .search-bar {
-  background-color: rgba(108, 174, 117, 0.7);
-  padding: 4%;
-  color: white
+  /* background-color: rgba(108, 174, 117, 0.7); */
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #8C6E40;
+  border-radius: 10px;
+  color: black
 }
 
 .search-bar button{
@@ -25,4 +29,40 @@
   color: green
 }
 
-  
+.button-noBack{
+  background-color: white;
+  border: none;
+  outline: none;
+  }
+
+.heart{
+  position: relative;
+  width: 10px;
+  height: 10px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background-color: rgba(221, 124, 124, 1);
+}
+.heart:before,
+.heart:after{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  content: '';
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  background-color: rgba(221, 124, 124, 1);
+}
+.heart:before{
+  bottom: 0px;
+  left: -5px;
+}
+.heart:after{
+  top: -5px;
+  right: 0px;
+}
