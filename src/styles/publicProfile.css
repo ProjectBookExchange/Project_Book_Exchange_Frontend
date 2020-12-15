@@ -1,3 +1,20 @@
+
 .public-profile{
     margin-top: 100px;
   }
+
+.userdata-containter{
+    background-color:white;
+    border: 1px solid #B28D51;
+    padding: 15px 20px 7px;
+    border-radius: 20px;
+    margin: 20px
+}
+
+.divInterest{
+  background-color: rgba(178, 141, 81, 0.3);
+  border: 1px solid #B28D51;
+  border-radius: 20px;
+  min-height: 30px;
+  margin-bottom: 30px
+}

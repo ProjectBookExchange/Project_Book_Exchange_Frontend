@@ -76,21 +76,9 @@ class Home extends React.Component {
           <div className="card-container" class="col" key={index}>
             <div class="card">
               <img src={book.imageUrl} class="card-img-top" alt={book.title} />
-              <div>
-                  {(this.state.message === book._id) &&
-                    <p class="errMessageWish">it's already on your list!</p>
-                  }
-
-                  {(this.state.message._id === book._id) &&
-                    <p class="messageAddedWish">Added to your list</p>
-                  }
-                </div>
               <div class="card-body">
-                
                 <div class="card-text text-right">
-
                   {this.props.isLogged.username
-
                     ? <Link class="button-noBack" data-toggle="tooltip" data-placement="top" data-html="true" title="Add to my wish list" onClick={() => this.addToMyWishes(book)}>
                       <div class="heart"></div>
                     </Link>
@@ -100,7 +88,13 @@ class Home extends React.Component {
                     </Link>
                   }
                 </div>
+                {(this.state.message === book._id) &&
+                    <p class="errMessageWish">it's already on your list!</p>
+                  }
 
+                  {(this.state.message._id === book._id) &&
+                    <p class="messageAddedWish">Added to your list</p>
+                  }
                 <h6 class="card-title">{book.title}</h6>
 
                 <p class="card-text">{book.author}</p>
@@ -143,7 +137,7 @@ class Home extends React.Component {
                 <input class="form-control me-2" type="search" placeholder="e.g. El Hobbit" name="title" onChange={(event) => this.changeInputsSearch(event.target)} />
               </div>
 
-              <div class="col-sm-4 col-md-2 align-self-end">
+              <div class="col-sm-4 col-md-2 align-self-end search-div">
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </div>
             </div>

@@ -1,24 +1,49 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.profile-name{
+    font-family: 'Lobster', cursive;
+}
+
 .profile-data{
     background-color:white;
     border: 1px solid #B28D51;
-    padding: 15px 20px 30px;
-    border-radius: 20px
+    padding: 15px 15px 15px 25px;
+    border-radius: 20px;
+    margin-bottom: 20px
+}
+
+.profile-data h5{
+    font-family: 'Lobster', cursive;
 }
 
 .profile-data button{
-    background-color: #ACCA91
+    background-color: #B28D51
 }
 
 .form-create-book{
-    background-color: rgba(253, 180, 158, 0.5);
-    padding: 20px
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 4px;
+    background-color: #FBDCB3 ;
 }
 
 .form-create-book input{
-    width: 50%;
+    width: 100%;
 }
 
 .form-create-book label{
-    color: #B28D51;
+    color: black;
+}
+
+#input-file{
+    font-size: 0.7rem;
+}
+
+.button-div{
+    margin-top: 20px
+}
+
+.data-div{
+    margin-top: 15px;
 }

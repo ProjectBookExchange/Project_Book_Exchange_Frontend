@@ -128,7 +128,9 @@ class Profile extends React.Component {
                             <div class="card-body">
                                 <h5 class="card-title">{book.title}</h5>
                                 <p class="card-text">{book.author}</p>
+
                                 <button onClick={() => this.removeMyBook(book)} class="btn btn-delete">Remove</button>
+
                                 <div class="card-footer">
                                     <small class="text-muted">Interested:</small><br />
                                     {book.interestedUsers.map((user, index) => {
@@ -156,7 +158,7 @@ class Profile extends React.Component {
             if (book.borrowedUser === '') {
                 return (
                     <div key={index} class="col card-container">
-                        <div class="card h-100">
+                        <div class="card">
                             <img src={book.imageUrl} class="card-img-top" alt={book.title} />
                             <div class="card-body">
                                 <h5 class="card-title">{book.title}</h5>
@@ -201,17 +203,21 @@ class Profile extends React.Component {
         return (
             <div>
                 <div class="container text-left profile-data">
-                    <h3 class="text-left">{this.props.isLogged.username}</h3>
-                    <div class="row justify-content-around">
+                    <h2 class="text-left profile-name">Welcome, {this.props.isLogged.username}</h2>
+                    <hr/>
+                    <div class="row row-cols-1 row-cols-md-3 g-3">
+                    
                         <div class="col">
-
-                            <p>City: {this.props.isLogged.city}</p>
-                            <p>Contact: {this.props.isLogged.contact}</p>
+                        <h5>Your user data</h5>
+                            <div class="data-div">
+                            <p><b>City:</b> {this.props.isLogged.city}</p>
+                            <p><b>Contact:</b> {this.props.isLogged.contact}</p>
+                            </div>
+                            
                         </div>
 
                         <div class="col">
-                            <p>Your lists</p>
-
+                            <h5>Your lists</h5>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
 
@@ -230,62 +236,45 @@ class Profile extends React.Component {
                             </ul>
 
                         </div>
-
+  
                         <div class="col">
-                            <button class="btn" type="button" onClick={() => this.showAddBook()}> Add new Book</button>
+                            <button class="btn" type="button" onClick={() => this.showAddBook()}> Upload book</button>
+                            {this.state.showForm &&
+
+                                <form onSubmit={e => this.handleSubmit(e)} class="form-create-book">
+
+                                    <div class="column align-items-center">
+
+                                        <div class="col text-left">
+                                            <label htmlFor="title">Title: </label>
+                                            <input type="text" name="title" onChange={e => this.handleChange(e)}
+                                            /><br />
+
+                                            <label htmlFor="author">Author: </label>
+                                            <input type="text" name="author" onChange={e => this.handleChange(e)}
+                                            /><br />
+
+                                            <label htmlFor="imageUrl">Image: </label>
+                                            <input id="input-file" type="file" onChange={e => this.handleFileUpload(e)}
+                                            />
+                                        </div>
+                                        <div class="col text-center button-div">
+                                            {this.state.newBook.imageUrl
+
+                                                ? <button class="btn btn-light" type="submit">Añadir libro</button>
+                                                : <button class="btn btn-light" type="submit" disabled>Añadir libro</button>
+
+                                            }
+
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            }
                         </div>
                     </div>
                 </div>
-
-                {this.state.showForm &&
-
-                    <form onSubmit={e => this.handleSubmit(e)} class="container form-create-book">
-
-                        <div class="row align-items-center">
-
-                            <div class="col-3">
-                                <h5>New book</h5>
-                            </div>
-
-                            <div class="col-7 text-left">
-                                <label htmlFor="title">Title: </label>
-                                <input type="text" name="title" onChange={e => this.handleChange(e)}
-                                /><br />
-
-                                <label htmlFor="author">Author: </label>
-                                <input type="text" name="author" onChange={e => this.handleChange(e)}
-                                /><br />
-
-                                <label htmlFor="imageUrl">Adjuntar imagen: </label>
-                                <input type="file" onChange={e => this.handleFileUpload(e)}
-                                />
-                            </div>
-
-                            <div class="col-2">
-
-                                {this.state.newBook.imageUrl
-
-                                    ? <button class="btn btn-light" type="submit">Añadir libro</button>
-                                    : <button class="btn btn-light" type="submit" disabled>Añadir libro</button>
-
-                                }
-                            </div>
-                        </div>
-                    </form>
-
-                }
-
-                {/* <br />
-
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <button onClick={() => this.showMyBooks()} class="nav-link active" aria-current="page">My Books</button>
-                    </li>
-                    <li class="nav-item">
-                        <button onClick={() => this.showMyWishes()} class="nav-link">My wishes</button>
-                    </li>
-                </ul>
-                <br /> */}
 
                 {this.state.showMyBooks &&
                     <div>

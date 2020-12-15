@@ -57,10 +57,9 @@ class Exchanges extends React.Component {
                             <div class="card">
                             <img src={borrowed.imageUrl} alt={borrowed.title} class="card-img-top" />
                             <div class="card-body">
-                                <h3 class="card-title">Borrowed:</h3>
-                                <p class="card-text">{borrowed.title}</p>
-
-                                <p class="card-text">{exchange.userPartner}</p>
+                                {/* <h3 class="card-title">Borrowed:</h3> */}
+                                <h3 class="card-title">{borrowed.title}</h3>
+                                <p class="card-text">Lent to: {exchange.userPartner}</p>
                             </div>
                             <div class="card-footer">
                                 <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
@@ -80,10 +79,10 @@ class Exchanges extends React.Component {
                         <div class="card">
                             <img src={acquired.imageUrl} alt={acquired.title} class="card-img-top" />
                             <div class="card-body">
-                                <h3 class="card-title">Acquired:</h3>
-                                <p class="card-text">{acquired.title}</p>
+                                {/* <h3 class="card-title">Acquired:</h3> */}
+                                <h3 class="card-title">{acquired.title}</h3>
 
-                                <p class="card-text">{exchange.userPartner}</p>
+                                <p class="card-text">Owner{exchange.userPartner}</p>
                             </div>
                             <div class="card-footer">
                                 <button onClick={() => this.removeExchange(exchange)} class="btn btn-delete">Remove</button>
@@ -102,16 +101,16 @@ class Exchanges extends React.Component {
                     ? ''
                     :
                     <div>
-                        <div class="container type-exchange-container">
+                        <div class="container ">
                             <h4 class="type-exchange">Borrowed</h4>
-                            <div class="row row-cols-2 row-cols-md-5 g-4">
+                            <div class="row row-cols-2 row-cols-md-5 g-4  divInterest">
 
                                 {this.renderBorrowed()}
                             </div></div>
 
-                        <div class="container type-exchange-container">
+                        <div class="container ">
                             <h4 class="type-exchange">Acquired</h4>
-                            <div class="row row-cols-2 row-cols-md-5 g-4">
+                            <div class="row row-cols-2 row-cols-md-5 g-4 divInterest">
 
                                 {this.renderAcquired()}
                             </div></div>

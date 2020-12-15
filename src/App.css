@@ -68,7 +68,7 @@
 }
 
 .form-sign-log-in button{
-  background-color: #8BBD8B;
+  background-color: #8C6E40;
   color: white;
   margin-top: 20px
 }
@@ -87,6 +87,7 @@
 
 .card {
   padding: 3px;
+  margin-bottom: 20px
 }
 
 .card-img-top{
@@ -123,7 +124,7 @@
 }
 
 .btn-delete{
-  background-color: #FDB49E;
+  background-color: #8C6E40;
 }
 
 
