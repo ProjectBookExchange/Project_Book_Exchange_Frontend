@@ -53,10 +53,12 @@ class Home extends React.Component {
     event.preventDefault();
     this.service.searchBooks(this.state.searchedBooks.owner_city, this.state.searchedBooks.title)
       .then((result) => {
+        console.log(result)
         return result
       })
       .then((searched) => {
         this.setState({ books: searched })
+        console.log(searched)
       })
       .catch((err) => {
         console.log(err);
@@ -69,8 +71,10 @@ class Home extends React.Component {
   }
 
   renderAllBooks = () => {
-    return this.state.books.map((book, index) => {
-      if (book.borrowedUser === '') {
+    if(this.state.books === false){
+      return <div class="container">No results found</div>
+    }else{
+      return this.state.books.map((book, index) => {
         return (
           <div className="card-container" class="col" key={index}>
             <div class="card">
@@ -109,10 +113,10 @@ class Home extends React.Component {
 
           </div>
         )
-      } else {
-        return '';
-      }
+      
     })
+    }
+    
   }
 
   render() {
