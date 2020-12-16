@@ -5,6 +5,53 @@
   margin: 0px
 } */
 
+
+.jumbo{
+  background-color: white;
+  margin-bottom: 12px;
+  /* padding: 0px; */
+  /* max-height: 430px; */
+}
+
+.jumb-text{
+  background-color: white;
+  padding: 50px 50px 50px 50px;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.jumb-text h2{
+  margin-bottom: 30px;
+}
+
+.jumb-text p{
+  margin-bottom: 30px;
+}
+
+.jumb-text a{
+  color: white;
+  font-size: 1rem
+}
+
+.jumb-text .login-btn{
+  color: #8C6E40;
+}
+
+.jumb-text img{
+  width: 40px;
+  margin-right: 7px
+}
+
+.jumb-image{
+  padding: 0px;
+}
+
+.jumb-image img{
+  width: 100%;
+  height: auto
+}
+
 .search-bar {
   /* background-color: rgba(108, 174, 117, 0.7); */
   background-color: white;

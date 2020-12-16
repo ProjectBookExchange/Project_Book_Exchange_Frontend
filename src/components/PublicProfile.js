@@ -66,18 +66,18 @@ class PublicProfile extends React.Component {
 
     renderPublicProfile () {
         return (
-            <div className="user-profile">
-                <div class="container text-left userdata-containter">
+            <div className="user-profile container">
 
+                <div class="column">
+
+                <div class="col-sm-1-md-12 text-left userdata-containter">
                     <h2> {this.state.userProfile.username} profile </h2>
 
-                    <div class="data-div">
                         <p><b>City:</b> {this.state.userProfile.city}</p>
                         <p><b>Contact:</b> {this.state.userProfile.contact}</p>
-                    </div>
                 </div>
 
-                <div class="container">
+                <div class="col-sm-1-md-12">
                     <h4 class="header-interested"> Books of interest</h4>
                     <div class="row row-cols-2 row-cols-md-5 g-4 divInterest">
                         {this.state.userProfile.wishList.map((book, index) => {
@@ -102,7 +102,7 @@ class PublicProfile extends React.Component {
                 </div>
 
                 <h4>Books published</h4>
-                <div class="container">
+                <div class="col-sm-1-md-12">
                     <div class="row row-cols-2 row-cols-md-5 g-4 divInterest">
                         {this.state.userProfile.myBooks.map((book, index) => {
                             if (book.borrowedUser === '') {
@@ -135,7 +135,7 @@ class PublicProfile extends React.Component {
                     </div>
                 </div>
 
-
+                </div>
 
             </div>
         )

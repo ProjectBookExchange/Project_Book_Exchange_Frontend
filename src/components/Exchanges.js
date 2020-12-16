@@ -10,11 +10,7 @@ class Exchanges extends React.Component {
 
     state = {
         myExchanges: [],
-        searchedExchanges: [
-            {userPartner: '',
-            title: []
-        }
-        ]
+        searchedByUser: ''
     }
 
     service = new ExchangeService()
@@ -100,18 +96,19 @@ class Exchanges extends React.Component {
     }
 
     changeSearchExchange = (_eventTarget) => {
-        this.setState({ searchedExchanges: { ...this.state.searchedExchanges, [_eventTarget.name]: _eventTarget.value } });
+        this.setState({ searchedByUser: { ...this.state.searchedByUser, [_eventTarget.name]: _eventTarget.value } });
     }
 
     searchBookExchange = (event) => {
         event.preventDefault();
-        this.service.searchExchange(this.state.searchedExchanges.userPartner, this.state.searchedExchanges.title)
+        this.service.searchExchange(this.state.searchedByUser.userPartner, this.props.isLogged._id)
           .then((result) => {
+            //   console.log(result)
             return result
           })
-        //   .then((searched) => {
-        //     this.setState({ books: searched })
-        //   })
+          .then((searched) => {
+            this.setState({ myExchanges: searched })
+          })
           .catch((err) => {
             console.log(err);
           });
@@ -123,16 +120,10 @@ class Exchanges extends React.Component {
 
                 <form class="container search-bar text-left" onSubmit={this.searchBookExchange}>
                     <div class="row align-items-center">
-                        <div class="col-sm-4 col-md-5">
+                        <div class="col-sm-4 col-md-10">
                             <label htmlFor="userPartner">User:</label>
                             <input class="form-control me-2" type="search" placeholder="e.g. Barcelona" name="userPartner" onChange={(event) => this.changeSearchExchange(event.target)} />
                         </div>
-
-                        <div class="col-sm-4 col-md-5">
-                            <label htmlFor="title">Title:</label>
-                            <input class="form-control me-2" type="search" placeholder="e.g. El Hobbit" name="title" onChange={(event) => this.changeSearchExchange(event.target)} />
-                        </div>
-
                         <div class="col-sm-4 col-md-2 align-self-end search-div">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </div>
@@ -142,7 +133,7 @@ class Exchanges extends React.Component {
 
 
                 {this.state.myExchanges.length === 0
-                    ? ''
+                    ? <p></p>
                     :
                     <div>
                         <div class="container ">

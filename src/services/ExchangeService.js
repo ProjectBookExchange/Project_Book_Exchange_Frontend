@@ -6,7 +6,7 @@ class ExchangeService {
 
   constructor() {
     let service = axios.create({
-      baseURL: "http://localhost:3001",
+      baseURL: "https://project-book-exchange.herokuapp.com/",
       withCredentials: true
     });
 
@@ -28,11 +28,10 @@ class ExchangeService {
       .then(response => response.data)
     }
 
-    searchExchange = (userPartner, title) => {
-      return this.service.post("/searchExchange", {userPartner, title})
+    searchExchange = (userPartner, userID) => {
+      return this.service.post("/searchExchange", {userPartner, userID})
       .then(response => response.data)
     }
-
 }
 
 export default ExchangeService;

@@ -140,7 +140,7 @@ class Profile extends React.Component {
                                 <button onClick={() => this.removeMyBook(book)} class="btn btn-delete">Remove</button>
 
                                 <div class="card-footer">
-                                    <small class="text-muted">Interested:</small><br />
+                                    <small class="text-muted">Interested: </small><br />
                                     {book.interestedUsers.map((user, index) => {
                                         return (
                                             <small class="text-muted"><Link to={`/publicProfile/${user.interestedUserID}`}>
@@ -173,11 +173,10 @@ class Profile extends React.Component {
                                 <p class="card-text">{book.author}</p>
                                 <button onClick={() => this.removeMyWishBook(book)} class="btn btn-delete">Remove</button>
                                 <div class="card-footer">
-                                    <small class="text-muted">User:
+                                    <small class="text-muted">User: 
                                 <Link to={`/publicProfile/${book.owner}`}>
-                                            {book.owner_name}
+                                             {book.owner_name}
                                         </Link>
-
                                     </small>
 
                                 </div>
@@ -207,21 +206,21 @@ class Profile extends React.Component {
         this.setState({ showMyBooks: false, showMyWishes: true })
     }
 
-    submitCityData = e => {
-        e.preventDefault();
-        this.serviceUser.editCity(this.state.temporalUserData, this.userID)
-            .then((newCity)=>{
-                this.setState({userData: { ...this.state.userData, city: newCity.city}})
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
+    // submitCityData = e => {
+    //     e.preventDefault();
+    //     this.serviceUser.editCity(this.state.temporalUserData, this.userID)
+    //         .then((newCity)=>{
+    //             this.setState({userData: { ...this.state.userData, city: newCity.city}})
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }
 
-    handleChangeCity = e => {
-        const {name, value} = e.target;
-        this.setState({ temporalUserData: { ...this.state.temporalUserData, [name]: value } })
-    }
+    // handleChangeCity = e => {
+    //     const {name, value} = e.target;
+    //     this.setState({ temporalUserData: { ...this.state.temporalUserData, [name]: value } })
+    // }
 
     render() {
         return (
@@ -238,7 +237,7 @@ class Profile extends React.Component {
                                 <p><b>Contact:</b> {this.state.userData.contact}</p>
                             </div>
 
-                            <form onSubmit={e => this.submitCityData(e)}> 
+                            {/* <form onSubmit={e => this.submitCityData(e)}> 
                                 <div class="column align-items-center">
                                     <div class="col text-left">
                                         <label htmlFor="city">City: </label>
@@ -247,19 +246,7 @@ class Profile extends React.Component {
                                         <button class="btn btn-light" type="submit">Save</button>
                                     </div>
                                 </div>
-                            </form>
-
-                            {/* <form>
-                                <div class="column align-items-center">
-                                    <div class="col text-left">
-                                        <label htmlFor="contact">Contact: </label>
-                                        <input type="text" name="contact" value={this.props.isLogged.contact} 
-                                        />
-                                        <button class="btn btn-light" type="submit">Save</button>
-                                    </div>
-                                </div>
                             </form> */}
-
 
                         </div>
 

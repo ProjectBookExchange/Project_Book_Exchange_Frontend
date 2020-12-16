@@ -88,12 +88,12 @@ class Home extends React.Component {
                   }
                 </div>
                 {(this.state.message === book._id) &&
-                    <p class="errMessageWish">it's already on your list!</p>
-                  }
+                  <p class="errMessageWish">it's already on your list!</p>
+                }
 
-                  {(this.state.message._id === book._id) &&
-                    <p class="messageAddedWish">Added to your list</p>
-                  }
+                {(this.state.message._id === book._id) &&
+                  <p class="messageAddedWish">Added to your list</p>
+                }
                 <h6 class="card-title">{book.title}</h6>
 
                 <p class="card-text">{book.author}</p>
@@ -119,11 +119,38 @@ class Home extends React.Component {
     return (
       <div className="home-page">
 
-        {/* <div class="jumbotron jumbotron-fluid"> */}
-        <div class="container">
-          {/* <h1 class="display-5">BookExchange</h1> */}
-          {/* <p>Intercambia tus libros con otros usuarios</p> */}
+        {!this.props.isLogged.username
 
+          ?
+          <div class="container jumbo">
+            <div class="row align-items-center">
+              <div class="col-sm-2 col-md-5 jumb-text">
+
+              <div>
+                  <h2>BookExchange</h2>
+                  <p> Get in touch with other readers and exchange your books with them</p>
+                </div>
+
+              <div>
+               <button class="btn"><Link to="/signup">Sign Up</Link></button>
+               <br/><br/>
+               <small>Do you already have an account?</small> <Link to="/login" class="login-btn">Log in</Link>
+
+              </div>
+                
+              </div>
+
+              <div class="col-sm-2 col-md-7 jumb-image">
+                <img src="./images/fondo.jpg" alt="fondo" />
+              </div>
+            </div>
+          </div>
+
+          : ''
+
+        }
+
+        <div class="container">
           <form class="container search-bar text-left" onSubmit={this.searchBook}>
             <div class="row align-items-center">
               <div class="col-sm-4 col-md-5">
@@ -143,7 +170,6 @@ class Home extends React.Component {
 
           </form>
         </div>
-        {/* </div> */}
 
         <br />
 
@@ -151,9 +177,7 @@ class Home extends React.Component {
           ? this.renderSpinner()
           :
           <div className="renderBooks" class="container">
-            {/* <div class="row row-cols-2 row-cols-md-4 g-4"> */}
             <div class="row row-cols-2 row-cols-md-5 g-4">
-
               {this.renderAllBooks()}
             </div>
           </div>

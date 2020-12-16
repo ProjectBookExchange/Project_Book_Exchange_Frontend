@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-.public-profile{
-    margin-top: 100px;
-  }
+.user-profile h4{
+    font-family: 'Lobster', cursive;
+}
+
+.user-profile h2{
+  font-family: 'Lobster', cursive;
+  margin-bottom: 20px;
+}
 
 .userdata-containter{
     background-color:white;
@@ -18,3 +24,8 @@
   min-height: 30px;
   margin-bottom: 30px
 }
+
+.card-container{
+  margin-bottom: 20px
+}
+

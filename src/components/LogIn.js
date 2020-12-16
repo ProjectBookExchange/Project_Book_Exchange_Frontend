@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/formSignLog.css';
 
 const LogIn = (props)=>{
   // const {submitLogIn, loggingUser, changeHandlerLogIn} = props
@@ -11,7 +12,6 @@ const LogIn = (props)=>{
 
         <h1 class="h3 mb-3 fw-normal">Please Log In</h1>
 
-        <label class="visually-hidden" htmlFor="username"/>
         <input 
           type="text"
           class="form-control" 
@@ -21,7 +21,6 @@ const LogIn = (props)=>{
           onChange={(event)=>props.changeHandlerLogIn(event.target)}
         />
 
-        <label class="visually-hidden" htmlFor="password"/>
         <input 
           type="password"
           class="form-control" 
@@ -34,8 +33,6 @@ const LogIn = (props)=>{
 <p class="errMessage">{props.errMessage} </p>
         <button class="w-100 btn btn-lg" type="submit">Log In</button>
 
-        <p class="mt-5 mb-3 text-muted"><i>Para viajar lejos, no hay mejor nave que un libro – Emily Dickinson</i></p>
-        <img src="./images/bookGif.gif" alt="bookGif" width="100%"/>
       </form>
       
     </div>

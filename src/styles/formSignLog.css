@@ -1,0 +1,13 @@
+/* SIGNUP and LOGIN */
+.form-sign-log-in {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto
+}
+  
+.form-sign-log-in button{
+    background-color: #8C6E40;
+    color: white;
+    margin-top: 20px
+}

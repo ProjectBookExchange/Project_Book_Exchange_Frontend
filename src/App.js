@@ -120,6 +120,8 @@ class App extends React.Component {
 
 							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/login">Log In</Link>}
 
+							{this.state.isLogged.username && <span class="nav-item-welcome">Welcome, {this.state.isLogged.username}</span>}
+
 							{this.state.isLogged.username && <Link class="nav-item nav-link" onClick={() => this.logOut()}>Log Out</Link>}
 
 						</div>
