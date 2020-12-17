@@ -1,40 +1,40 @@
 import React from 'react'
 import '../styles/formSignLog.css';
 
-const LogIn = (props)=>{
-  // const {submitLogIn, loggingUser, changeHandlerLogIn} = props
-  return(
+const LogIn = (props) => {
+
+  return (
     <div>
 
       <form onSubmit={props.submitLogIn} class="form-sign-log-in">
 
-        <img class="mb-4" src="./images/bookBrand.png" alt="bookBrand" width="100"/>
+        <img class="mb-4" src="./images/bookBrand.png" alt="bookBrand" width="100" />
 
         <h1 class="h3 mb-3 fw-normal">Please Log In</h1>
 
-        <input 
+        <input
           type="text"
-          class="form-control" 
-          name="username" 
+          class="form-control"
+          name="username"
           value={props.loggingUser.username}
           placeholder="Username"
-          onChange={(event)=>props.changeHandlerLogIn(event.target)}
+          onChange={(event) => props.changeHandlerLogIn(event.target)}
         />
 
-        <input 
+        <input
           type="password"
-          class="form-control" 
-          name="password" 
-          value={props.loggingUser.password} 
+          class="form-control"
+          name="password"
+          value={props.loggingUser.password}
           placeholder="Password"
-          onChange={(event)=>props.changeHandlerLogIn(event.target)}
+          onChange={(event) => props.changeHandlerLogIn(event.target)}
         />
 
-<p class="errMessage">{props.errMessage} </p>
+        <p class="errMessage">{props.errMessage} </p>
         <button class="w-100 btn btn-lg" type="submit">Log In</button>
 
       </form>
-      
+
     </div>
   )
 }

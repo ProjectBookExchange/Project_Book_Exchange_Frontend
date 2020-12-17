@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/formSignLog.css';
 
 const SignUp = (props) => {
-  // const {submitSignUp, newUser, changeHandlerSignUp} = props
+
   return (
     <div class="container">
 

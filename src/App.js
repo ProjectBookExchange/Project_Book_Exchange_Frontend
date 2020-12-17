@@ -1,10 +1,14 @@
+
+// React
 import React from 'react';
+import { Link, Route, Redirect } from 'react-router-dom';
+
+// Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './App.css';
 
+// Components
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import LogIn from './components/LogIn';
@@ -12,9 +16,8 @@ import Profile from './components/Profile';
 import PublicProfile from './components/PublicProfile';
 import Exchanges from './components/Exchanges';
 
-import { Link, Route, Redirect } from 'react-router-dom';
+// Services
 import UserService from './services/UserService';
-
 
 
 class App extends React.Component {
@@ -27,12 +30,12 @@ class App extends React.Component {
 		errMessageLogin: ''
 	}
 
-	service = new UserService();
+	userService = new UserService();
 
 	//SIGNUP CONFIG
 	submitSignUp = (event) => {
 		event.preventDefault();
-		this.service.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city, this.state.newUser.contact)
+		this.userService.signup(this.state.newUser.username, this.state.newUser.password, this.state.newUser.city, this.state.newUser.contact)
 			.then((result) => {
 				this.setState({ errMessageSignup: result.message })
 				this.checkIfLoggedIn()
@@ -49,7 +52,7 @@ class App extends React.Component {
 	//LOGIN CONFIG
 	submitLogIn = (event) => {
 		event.preventDefault();
-		this.service
+		this.userService
 			.login(this.state.loggingUser.username, this.state.loggingUser.password)
 			.then((result) => {
 				this.setState({ errMessageLogin: result.message })
@@ -66,25 +69,19 @@ class App extends React.Component {
 	};
 
 	checkIfLoggedIn = () => {
-		this.service.loggedin()
+		this.userService.loggedin()
 			.then((result) => {
 				this.setState({ isLogged: result })
 			})
 	};
 
 	logOut = () => {
-
-		this.service.logout()
+		this.userService.logout()
 			.then(() => {
 				this.checkIfLoggedIn()
 			})
-			.catch((err) => {
-				console.log(err)
-			})
-
+			.catch((err) => {console.log(err)})
 	}
-
-	//Render page:
 
 	componentDidMount() {
 		this.checkIfLoggedIn();
@@ -109,45 +106,38 @@ class App extends React.Component {
 						<div class="navbar-nav mr-auto">
 
 							{this.state.isLogged.username && <Link class="nav-link" to="/profile">Profile</Link>}
-
 							{this.state.isLogged.username && <Link class="nav-link" to="/exchanges">Exchanges</Link>}
 
 						</div>
 						<div class="navbar-nav ml-auto">
 
 							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/signup">Sign Up</Link>}
-
-
 							{!this.state.isLogged.username && <Link class="nav-item nav-link" to="/login">Log In</Link>}
 
 							{this.state.isLogged.username && <span class="nav-item-welcome">Welcome, {this.state.isLogged.username}</span>}
-
 							{this.state.isLogged.username && <Link class="nav-item nav-link" onClick={() => this.logOut()}>Log Out</Link>}
 
 						</div>
 					</div>
 				</nav>
 
+{/* ROUTES */}
 				<Route exact path="/" render={() => <Home logOut={this.logOut} isLogged={this.state.isLogged} />} />
 
 				<Route
 					path="/signup"
-					render={() => (
-						!this.state.isLogged.username
-						?<SignUp 
-							submitSignUp={this.submitSignUp}
-							errMessage={this.state.errMessageSignup} 
-							newUser={this.state.newUser} 
-							changeHandlerSignUp={this.changeHandlerSignUp} />
-						: <Redirect to='/profile' />
-					)}
-				/>
-
+					render={() => (!this.state.isLogged.username
+							? <SignUp
+								submitSignUp={this.submitSignUp}
+								errMessage={this.state.errMessageSignup}
+								newUser={this.state.newUser}
+								changeHandlerSignUp={this.changeHandlerSignUp} />
+							: <Redirect to='/profile' />
+					)}/>
 
 				<Route
 					path="/login"
-					render={() => (
-						!this.state.isLogged.username
+					render={() => (!this.state.isLogged.username
 							? <LogIn
 								submitLogIn={this.submitLogIn}
 								loggingUser={this.state.loggingUser}
@@ -155,42 +145,34 @@ class App extends React.Component {
 								errMessage={this.state.errMessageLogin}
 							/>
 							: <Redirect to='/profile' />
-					)}
-				/>
+					)}/>
 
 				<Route
 					path="/profile"
-					render={() => (
-						this.state.isLogged.username
+					render={() => (this.state.isLogged.username
 							? <Profile
 								isLogged={this.state.isLogged}
 							/>
 							: <Redirect to='/' />
-					)}
-				/>
+					)}/>
 
 				<Route
 					path="/publicProfile/:id"
 					render={(props) => {
-						return (
-							this.state.isLogged.username
+						return (this.state.isLogged.username
 								? <PublicProfile {...props} isLogged={this.state.isLogged} />
 								: <Redirect to='/login' />
 						)
-					}}
-				/>
+					}}/>
 
 				<Route
 					path="/exchanges"
-					render={() => (
-						this.state.isLogged.username
+					render={() => (this.state.isLogged.username
 							? <Exchanges
 								isLogged={this.state.isLogged}
 							/>
 							: <Redirect to='/' />
-					)}
-				/>
-
+					)}/>
 			</div>
 		);
 	}

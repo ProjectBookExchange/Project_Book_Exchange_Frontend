@@ -1,13 +1,15 @@
-import React from 'react'
-import BookService from '../services/BookService'
-import ExchangeService from '../services/ExchangeService';
-import UserService from '../services/UserService';
 
+// React
+import React from 'react'
+import { Link } from 'react-router-dom';
+
+// Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../styles/profile.css';
 
-import { Link } from 'react-router-dom';
+// Services
+import BookService from '../services/BookService'
 
 
 class Profile extends React.Component {
@@ -34,11 +36,33 @@ class Profile extends React.Component {
         showMyWishes: false
     }
 
-    service = new BookService()
-    serviceExchange = new ExchangeService()
-    serviceUser = new UserService()
+    bookService = new BookService()
 
     userID = this.props.isLogged._id
+
+    componentDidMount() {
+        this.bookService.getMyBooks(this.props.isLogged._id)
+            .then((result) => result.myBooks)
+            .then((myBooks) => {
+                this.setState({ books: myBooks })
+                this.setState({userData: {...this.state.userData, name: this.props.isLogged.username, city: this.props.isLogged.city, contact: this.props.isLogged.contact}})
+                this.getMyWishes()
+            })
+            .catch((err) => console.log(err))
+    }
+
+    rerender() {
+        this.bookService.getMyBooks(this.props.isLogged._id)
+            .then((result) => result.myBooks)
+            .then((myBooks) => {
+                this.setState({ books: myBooks })
+                this.getMyWishes()
+                this.setState({ newBook: { ...this.state.newBook, imageUrl: '' } })
+            })
+            .catch((err) => console.log(err))
+    }
+
+    // MY BOOKS
 
     handleChange = e => {
         const { name, value } = e.target;
@@ -50,7 +74,7 @@ class Profile extends React.Component {
         const uploadData = new FormData();
         uploadData.append("imageUrl", e.target.files[0]);
 
-        this.service.handleUpload(uploadData)
+        this.bookService.handleUpload(uploadData)
             .then(response => {
                 return this.setState({ newBook: { ...this.state.newBook, imageUrl: response.secure_url } });
             })
@@ -61,68 +85,17 @@ class Profile extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.service.saveNewThing(this.state.newBook)
+        this.bookService.saveNewBook(this.state.newBook)
             .then(() => {
-                // console.log('added: ', res);
                 this.rerender()
                 this.setState({ showForm: false })
-                // here you would redirect to some other page 
             })
-            .catch(err => {
-                console.log("Error while adding the thing: ", err);
-            });
-    }
-
-    componentDidMount() {
-        this.service.getMyBooks(this.props.isLogged._id)
-            .then((result) => {
-                return result.myBooks
-            })
-            .then((myBooks) => {
-                this.setState({ books: myBooks })
-                this.setState({userData: {...this.state.userData, name: this.props.isLogged.username, city: this.props.isLogged.city, contact: this.props.isLogged.contact}})
-                this.getMyWishes()
-            })
-            .catch((err) => console.log(err))
-    }
-
-    rerender() {
-        this.service.getMyBooks(this.props.isLogged._id)
-            .then((result) => {
-                return result.myBooks
-            })
-            .then((myBooks) => {
-                this.setState({ books: myBooks })
-                this.getMyWishes()
-                this.setState({ newBook: { ...this.state.newBook, imageUrl: '' } })
-            })
-            .catch((err) => console.log(err))
-    }
-
-    getMyWishes() {
-        this.service.viewMyWishes(this.props.isLogged._id)
-            .then((result) => {
-                return result
-            })
-            .then((wishesData) => {
-                this.setState({ myWishes: wishesData })
-            })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err));
     }
 
     removeMyBook(book) {
-        this.service.deleteMyBook(book)
-            .then(() => {
-                this.rerender()
-            })
-            .catch((err) => console.log(err))
-    }
-
-    removeMyWishBook(book) {
-        this.service.deleteMyWishBook(book, this.userID)
-            .then(() => {
-                this.rerender()
-            })
+        this.bookService.deleteMyBook(book)
+            .then(() => this.rerender())
             .catch((err) => console.log(err))
     }
 
@@ -161,6 +134,31 @@ class Profile extends React.Component {
         })
     }
 
+    showAddBook() {
+        this.state.showForm
+            ? this.setState({ showForm: false })
+            : this.setState({ showForm: true })
+    }
+
+    showMyBooks() {
+        this.setState({ showMyBooks: true, showMyWishes: false })
+    }
+
+    // MY WISHES
+
+    getMyWishes() {
+        this.bookService.viewMyWishes(this.props.isLogged._id)
+            .then((result) => result)
+            .then((wishesData) => this.setState({ myWishes: wishesData }))
+            .catch((err) => console.log(err))
+    }
+
+    removeMyWishBook(book) {
+        this.bookService.deleteMyWishBook(book, this.userID)
+            .then(() => this.rerender())
+            .catch((err) => console.log(err))
+    }
+
     renderMyWishes() {
         return this.state.myWishes.map((book, index) => {
             if (book.borrowedUser === '') {
@@ -192,36 +190,10 @@ class Profile extends React.Component {
         })
     }
 
-    showAddBook() {
-        this.state.showForm
-            ? this.setState({ showForm: false })
-            : this.setState({ showForm: true })
-    }
-
-    showMyBooks() {
-        this.setState({ showMyBooks: true, showMyWishes: false })
-    }
-
     showMyWishes() {
         this.setState({ showMyBooks: false, showMyWishes: true })
     }
-
-    // submitCityData = e => {
-    //     e.preventDefault();
-    //     this.serviceUser.editCity(this.state.temporalUserData, this.userID)
-    //         .then((newCity)=>{
-    //             this.setState({userData: { ...this.state.userData, city: newCity.city}})
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }
-
-    // handleChangeCity = e => {
-    //     const {name, value} = e.target;
-    //     this.setState({ temporalUserData: { ...this.state.temporalUserData, [name]: value } })
-    // }
-
+    
     render() {
         return (
             <div>
@@ -236,17 +208,6 @@ class Profile extends React.Component {
                                 <p><b>City:</b> {this.state.userData.city}</p>
                                 <p><b>Contact:</b> {this.state.userData.contact}</p>
                             </div>
-
-                            {/* <form onSubmit={e => this.submitCityData(e)}> 
-                                <div class="column align-items-center">
-                                    <div class="col text-left">
-                                        <label htmlFor="city">City: </label>
-                                        <input type="text" name="city" placeholder={this.state.userData.city} onChange={e => this.handleChangeCity(e)} 
-                                        />
-                                        <button class="btn btn-light" type="submit">Save</button>
-                                    </div>
-                                </div>
-                            </form> */}
 
                         </div>
 
@@ -299,12 +260,9 @@ class Profile extends React.Component {
                                                 : <button class="btn btn-light" type="submit" disabled>Añadir libro</button>
 
                                             }
-
                                         </div>
-
                                     </div>
                                 </form>
-
                             }
                         </div>
                     </div>

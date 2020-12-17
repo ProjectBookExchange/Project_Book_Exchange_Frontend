@@ -48,18 +48,13 @@ class BookService {
   };
   
   handleUpload (theFile) {
-      // console.log('file in service: ', theFile)
       return this.service.post('/uploadFile', theFile)
-        .then(res => {
-          console.log(res.data)
-          return res.data  
-        })
+        .then(res => res.data)
         .catch(this.errorHandler);
     }
    
-  saveNewThing (newThing) {
-      // console.log('new thing is: ', newThing)
-      return this.service.post('/myBooks', newThing)
+  saveNewBook (newBook) {
+      return this.service.post('/myBooks', newBook)
         .then(res => res.data)
         .catch(this.errorHandler);
     }

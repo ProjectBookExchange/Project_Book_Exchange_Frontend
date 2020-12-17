@@ -1,9 +1,12 @@
-import React from 'react'
-import ExchangeService from '../services/ExchangeService'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+// React
+import React from 'react'
+
+// Styles
 import '../styles/exchanges.css';
+
+// Services
+import ExchangeService from '../services/ExchangeService'
 
 
 class Exchanges extends React.Component {
@@ -13,40 +16,25 @@ class Exchanges extends React.Component {
         searchedByUser: ''
     }
 
-    service = new ExchangeService()
+    exchangeService = new ExchangeService()
 
     componentDidMount = () => {
-        this.service.viewExchanges(this.props.isLogged._id)
-            .then((result) => {
-                return result.myExchanges
-            })
-            .then((exchanges) => {
-                this.setState({ myExchanges: exchanges })
-                console.log(this.state.myExchanges)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        this.exchangeService.viewExchanges(this.props.isLogged._id)
+            .then((result) => result.myExchanges)
+            .then((exchanges) => this.setState({ myExchanges: exchanges }))
+            .catch((err) => console.log(err))
     }
 
     rerender = () => {
-        this.service.viewExchanges(this.props.isLogged._id)
-            .then((result) => {
-                return result.myExchanges
-            })
-            .then((exchanges) => {
-                this.setState({ myExchanges: exchanges })
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        this.exchangeService.viewExchanges(this.props.isLogged._id)
+            .then((result) => result.myExchanges)
+            .then((exchanges) => this.setState({ myExchanges: exchanges }))
+            .catch((err) => console.log(err))
     }
 
     removeExchange(exchange) {
-        this.service.deleteExchange(exchange)
-            .then(() => {
-                this.rerender()
-            })
+        this.exchangeService.deleteExchange(exchange)
+            .then(() => this.rerender())
             .catch((err) => console.log(err))
     }
 
@@ -101,17 +89,10 @@ class Exchanges extends React.Component {
 
     searchBookExchange = (event) => {
         event.preventDefault();
-        this.service.searchExchange(this.state.searchedByUser.userPartner, this.props.isLogged._id)
-          .then((result) => {
-            //   console.log(result)
-            return result
-          })
-          .then((searched) => {
-            this.setState({ myExchanges: searched })
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.exchangeService.searchExchange(this.state.searchedByUser.userPartner, this.props.isLogged._id)
+          .then((result) => result)
+          .then((searched) => this.setState({ myExchanges: searched }))
+          .catch((err) => console.log(err));
       }
 
     render() {
@@ -130,7 +111,6 @@ class Exchanges extends React.Component {
                     </div>
 
                 </form>
-
 
                 {this.state.myExchanges.length === 0
                     ? <p></p>
